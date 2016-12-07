@@ -1,18 +1,12 @@
-const React = require('react');
-// const ReactDOM = require('react-dom');
 
 
-class LocationButton extends React.Component {
+class LocationSearch extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       city: 'Default',
     };
   }
-
-// addToCount (num) {
-//   this.setState({count: this.state.count + num});
-// }
 
   render() {
     return (
