@@ -1,9 +1,21 @@
 @import "./variables.scss";
 
+* {
+@include standard-margin;
+}
+
 body {
   background: $background-color;
 }
 
 h2 {
   font-size: 30px;
+}
+
+h3 {
+  font-size: 20px;
+}
+
+.LocationButton {
+  // margin: 5px;
 }

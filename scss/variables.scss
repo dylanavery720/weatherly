@@ -1,6 +1,14 @@
 // colors
-$background-color:#eee43e;
+$background-color:#FFFFFF;
 $snow-color: #eee9e9;
 $cold-color: #9ee4d9;
-$rain-color: #1733a8;
-$sun-color:  #fdb813;
+$rain-color: #017DC2;
+$sun-color:  #fDB126;
+
+
+
+// mixins
+
+@mixin standard-margin {
+  margin: 10px;
+}
