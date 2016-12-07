@@ -1,10 +1,8 @@
-const React = require('react');
-
-
+import React from 'react'
 
 class LocationSearch extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.state = {
       city: '',
     };
@@ -15,6 +13,10 @@ class LocationSearch extends React.Component {
     this.setState({ name });
   }
 
+  handleSubmit() {
+    this.props.sendForecast(this.state)
+  }
+
   render() {
     return (
   <section className="SearchContainer">
@@ -22,12 +24,18 @@ class LocationSearch extends React.Component {
     <input
     type="text"
     name="city"
+    className="location-input"
     placeholder="Your Location"
     aria-label="Your Location"
     value={this.state.city}
     onChange={(e)=>{
-      this.updateLocation(e);
+    this.updateLocation(e);
     }}/>
+    <button className="LocationButton" onClick={ () => {
+      this.handleSubmit()
+    }}>
+      <span>Submit</span>
+    </button>
  </section>
     );
   }

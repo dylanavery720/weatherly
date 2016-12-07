@@ -1,4 +1,4 @@
-const React = require('react');
+import React from 'react'
 // const ReactDOM = require('react-dom');
 
 
@@ -14,9 +14,13 @@ class LocationButton extends React.Component {
 
   render() {
     return (
-      <button className="LocationButton">
-        <span>{this.props.text}</span>
-      </button>
+      <section className="LocationButtonContainer">
+        {/* <button className="LocationButton" onClick={ () => {
+          this.handleSubmit()
+        }}>
+          <span>{this.props.text}</span>
+        </button> */}
+      </section>
     )
   }
 }

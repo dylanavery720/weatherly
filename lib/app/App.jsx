@@ -1,27 +1,26 @@
 
-const React = require('react');
-// const ReactDOM = require('react-dom');
-const Summary = require('./component/Summary.jsx');
-const LocationSearch = require('./component/LocationSearch.jsx');
-const LocationButton = require('./component/LocationButton.jsx');
+import React from 'react'
+
+import Summary  from './component/Summary.jsx';
+import LocationSearch  from './component/LocationSearch.jsx';
+import LocationButton  from './component/LocationButton.jsx';
 
 class App extends React.Component {
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-  //     city: 'Default',
-  //   };
-  // }
-
-// addToCount (num) {
-//   this.setState({count: this.state.count + num});
-// }
+  constructor(){
+    super()
+    this.state = {
+      forecasts: []
+    }
+  }
+  storeForecast(forecast) {
+    this.setState({ forecasts: this.state.forecasts})
+  }
 
   render() {
     return (
     <section>
-    <LocationSearch />
-    <LocationButton text="Submission" onClick=""/>
+      <LocationSearch sendForecast={this.storeForecast.bind(this)} />
+    {/* <LocationButton text="Submission" /> */}
     <Summary/>
     </section>
     );
