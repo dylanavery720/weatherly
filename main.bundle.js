@@ -8222,7 +8222,7 @@
 
 
 	// module
-	exports.push([module.id, "/* http://meyerweb.com/eric/tools/css/reset/\n   v2.0 | 20110126\n   License: none (public domain)\n*/\nhtml, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {\n  margin: 0;\n  padding: 0;\n  border: 0;\n  font-size: 100%;\n  font: inherit;\n  vertical-align: baseline; }\n\n/* HTML5 display-role reset for older browsers */\narticle, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {\n  display: block; }\n\nbody {\n  line-height: 1; }\n\nol, ul {\n  list-style: none; }\n\nblockquote, q {\n  quotes: none; }\n\nblockquote:before, blockquote:after {\n  content: '';\n  content: none; }\n\nq:before, q:after {\n  content: '';\n  content: none; }\n\ntable {\n  border-collapse: collapse;\n  border-spacing: 0; }\n\nbody {\n  background: #eee43e; }\n\nh2 {\n  font-size: 30px; }\n", ""]);
+	exports.push([module.id, "/* http://meyerweb.com/eric/tools/css/reset/\n   v2.0 | 20110126\n   License: none (public domain)\n*/\nhtml, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {\n  margin: 0;\n  padding: 0;\n  border: 0;\n  font-size: 100%;\n  font: inherit;\n  vertical-align: baseline; }\n\n/* HTML5 display-role reset for older browsers */\narticle, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {\n  display: block; }\n\nbody {\n  line-height: 1; }\n\nol, ul {\n  list-style: none; }\n\nblockquote, q {\n  quotes: none; }\n\nblockquote:before, blockquote:after {\n  content: '';\n  content: none; }\n\nq:before, q:after {\n  content: '';\n  content: none; }\n\ntable {\n  border-collapse: collapse;\n  border-spacing: 0; }\n\n* {\n  margin: 10px; }\n\nbody {\n  background: #FFFFFF; }\n\nh2 {\n  font-size: 30px; }\n\nh3 {\n  font-size: 20px; }\n", ""]);
 
 	// exports
 
@@ -29773,6 +29773,8 @@
 	var React = __webpack_require__(303);
 	// const ReactDOM = require('react-dom');
 	var Summary = __webpack_require__(480);
+	var LocationSearch = __webpack_require__(481);
+	var LocationButton = __webpack_require__(482);
 
 	var App = function (_React$Component) {
 	  _inherits(App, _React$Component);
@@ -29799,8 +29801,10 @@
 
 	    value: function render() {
 	      return React.createElement(
-	        'div',
-	        { className: 'app' },
+	        'section',
+	        null,
+	        React.createElement(LocationSearch, null),
+	        React.createElement(LocationButton, { text: 'Submission', onClick: '' }),
 	        React.createElement(Summary, null)
 	      );
 	    }
@@ -29859,7 +29863,7 @@
 	        React.createElement(
 	          "h2",
 	          null,
-	          "A Fuckin Summary"
+	          "Today It is Going to be Hot as Hell"
 	        )
 	      );
 	    }
@@ -29869,6 +29873,134 @@
 	}(React.Component);
 
 	module.exports = Summary;
+
+/***/ },
+/* 481 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var React = __webpack_require__(303);
+
+	var LocationSearch = function (_React$Component) {
+	  _inherits(LocationSearch, _React$Component);
+
+	  function LocationSearch(props) {
+	    _classCallCheck(this, LocationSearch);
+
+	    var _this = _possibleConstructorReturn(this, (LocationSearch.__proto__ || Object.getPrototypeOf(LocationSearch)).call(this, props));
+
+	    _this.state = {
+	      city: ''
+	    };
+	    return _this;
+	  }
+
+	  _createClass(LocationSearch, [{
+	    key: 'updateLocation',
+	    value: function updateLocation(e) {
+	      var name = e.target.name;
+
+	      this.setState({ name: name });
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _this2 = this;
+
+	      return React.createElement(
+	        'section',
+	        { className: 'SearchContainer' },
+	        React.createElement(
+	          'h3',
+	          null,
+	          'Weather\uD83D\uDD0ABeat'
+	        ),
+	        React.createElement('input', {
+	          type: 'text',
+	          name: 'city',
+	          placeholder: 'Your Location',
+	          'aria-label': 'Your Location',
+	          value: this.state.city,
+	          onChange: function onChange(e) {
+	            _this2.updateLocation(e);
+	          } })
+	      );
+	    }
+	  }]);
+
+	  return LocationSearch;
+	}(React.Component);
+
+	{/* ReactDOM.render(<LocationButton text={this.state.city}
+	   />, document.getElementById('application')); */}
+
+	module.exports = LocationSearch;
+
+/***/ },
+/* 482 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var React = __webpack_require__(303);
+	// const ReactDOM = require('react-dom');
+
+
+	var LocationButton = function (_React$Component) {
+	  _inherits(LocationButton, _React$Component);
+
+	  function LocationButton() {
+	    _classCallCheck(this, LocationButton);
+
+	    return _possibleConstructorReturn(this, (LocationButton.__proto__ || Object.getPrototypeOf(LocationButton)).apply(this, arguments));
+	  }
+
+	  _createClass(LocationButton, [{
+	    key: "render",
+
+	    // constructor(props) {
+	    //   super(props);
+	    //   this.state = { count: props.initialCount }
+	    // }
+
+	    // add (num) {
+	    //   this.setState({count: this.state.count + num});
+	    // }
+
+	    value: function render() {
+	      return React.createElement(
+	        "button",
+	        { className: "LocationButton" },
+	        React.createElement(
+	          "span",
+	          null,
+	          this.props.text
+	        )
+	      );
+	    }
+	  }]);
+
+	  return LocationButton;
+	}(React.Component);
+
+	module.exports = LocationButton;
 
 /***/ }
 /******/ ]);

@@ -2,6 +2,8 @@
 const React = require('react');
 // const ReactDOM = require('react-dom');
 const Summary = require('./component/Summary.jsx');
+const LocationSearch = require('./component/LocationSearch.jsx');
+const LocationButton = require('./component/LocationButton.jsx');
 
 class App extends React.Component {
   // constructor(props) {
@@ -17,9 +19,11 @@ class App extends React.Component {
 
   render() {
     return (
-
-    <div className="app"><Summary/></div>
-
+    <section>
+    <LocationSearch />
+    <LocationButton text="Submission" onClick=""/>
+    <Summary/>
+    </section>
     );
   }
 }

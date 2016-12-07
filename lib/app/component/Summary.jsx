@@ -16,7 +16,7 @@ class Summary extends React.Component {
   render() {
     return (
   <section className="Summary">
-    <h2>A Fuckin Summary</h2>
+    <h2>Today It is Going to be Hot as Hell</h2>
  </section>
     );
   }
