@@ -7,17 +7,9 @@ class LocationSearch extends React.Component {
     super();
     this.state = {
       city: '',
-      weather: []
     };
   }
 
-  // getWeather() {
-  //   $.get('http://weatherly-api.herokuapp.com/api/weather', (response) => {
-  //     this.setState({
-  //       weather: response,
-  //     });
-  //   });
-  // }
 
   updateLocation(e) {
     const { name, value } = e.target;
@@ -39,19 +31,10 @@ class LocationSearch extends React.Component {
     value={this.state.city}
     onChange={(e) => {
     this.updateLocation(e);
-    console.log(this.state.city);
     }}/>
-    {/* <button className="LocationButton" onClick={ () => {
-      this.handleSubmit()
-    }}>
-      <span>Submit</span>
-    </button> */}
  </section>
     );
   }
 }
-
-{ /* ReactDOM.render(<LocationButton text={this.state.city}
-   />, document.getElementById('application')); */ }
 
 module.exports = LocationSearch;

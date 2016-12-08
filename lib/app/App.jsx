@@ -1,6 +1,6 @@
 
 import React from 'react'
-
+import ReactDOM from 'react-dom'
 import Summary  from './component/Summary.jsx';
 import LocationSearch  from './component/LocationSearch.jsx';
 import LocationButton  from './component/LocationButton.jsx';
@@ -20,7 +20,7 @@ class App extends React.Component {
   getWeather() {
     $.get('http://weatherly-api.herokuapp.com/api/weather', (response) => {
       this.setState({
-        weather: response,
+        forecasts: response,
       });
     });
   }
@@ -28,22 +28,26 @@ class App extends React.Component {
 
   handleSubmit() {
     this.getWeather();
-    console.log(this.state.weather[3].location);
+    console.log(this.state.forecasts[22].date);
     // this.props.sendForecast(this.state);
   }
 
   render() {
     return (
     <section>
-      <LocationSearch  />
-    <LocationButton text="Submission" handleClick={this.handleSubmit.bind(this)} />
-    <Summary/>
+        <section className="search-container">
+          <LocationSearch  />
+          <LocationButton text="Submission" handleClick={this.handleSubmit.bind(this)} />
+       </section>
+       <section>
+          <Summary />
+       </section>
     </section>
     );
   }
 }
 
 
-module.exports = App;
+ReactDOM.render(<App title='Weather🔊Beat' />, document.getElementById('application'))
 
 // const $ = require('jquery');
