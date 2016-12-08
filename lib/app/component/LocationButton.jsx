@@ -4,18 +4,6 @@ const $ = require('jquery');
 
 
 class LocationButton extends React.Component {
-  // constructor(props) {
-  //   super(props);
-  //   this.state = { count: props.initialCount }
-  // }
-
-// add (num) {
-//   this.setState({count: this.state.count + num});
-// }
-
-
-
-
 
   render() {
     return (

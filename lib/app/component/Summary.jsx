@@ -19,7 +19,7 @@ class Summary extends React.Component {
   render() {
     return (
   <section className="Summary">
-    <h4>Today It is Going to be Hot as Hell</h4>
+    <h4>Hi</h4>
     <h2>{this.props.text}</h2>
  </section>
     );

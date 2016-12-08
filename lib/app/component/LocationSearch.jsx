@@ -6,14 +6,14 @@ class LocationSearch extends React.Component {
   constructor() {
     super();
     this.state = {
-      city: '',
+      city: ''
     };
   }
 
 
   updateLocation(e) {
     const { name, value } = e.target;
-    this.setState({ [name]: value });
+    this.setState({ [name]: value }, this.props.handleChange(value));
   }
 
 
@@ -21,7 +21,7 @@ class LocationSearch extends React.Component {
   render() {
     return (
   <section className="SearchContainer">
-    <h3>Weather🔊Beat</h3>
+    {/* <h3>Weather🔊Beat</h3> */}
     <input
     type="text"
     name="city"
