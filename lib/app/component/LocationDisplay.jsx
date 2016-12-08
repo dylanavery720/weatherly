@@ -1,17 +1,12 @@
 const React = require('react');
 
 
-class DisplayLocation extends React.Component {
+export default class DisplayLocation extends React.Component {
+
   constructor(props) {
     super(props);
-    this.state = {
-      city: 'Default',
-    };
-  }
 
-// addToCount (num) {
-//   this.setState({count: this.state.count + num});
-// }
+  }
 
   render() {
     return (
@@ -21,6 +16,3 @@ class DisplayLocation extends React.Component {
     );
   }
 }
-
-
-module.exports = DisplayLocation;

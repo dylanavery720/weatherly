@@ -4,13 +4,15 @@ import ReactDOM from 'react-dom'
 import Summary  from './component/Summary.jsx';
 import LocationSearch  from './component/LocationSearch.jsx';
 import LocationButton  from './component/LocationButton.jsx';
+import DisplayLocation from './component/LocationDisplay.jsx';
 const $ = require('jquery');
 
-class App extends React.Component {
+export default class App extends React.Component {
   constructor(){
     super()
     this.state = {
-      forecasts: []
+      forecasts: [],
+      city: ''
     }
   }
   storeForecast(forecast) {
@@ -25,21 +27,25 @@ class App extends React.Component {
     });
   }
 
+  changeCity(city) {
+    this.setState({ city: city })
+  }
 
-  handleSubmit() {
+  handleSubmit(city) {
     this.getWeather();
-    console.log(this.state.forecasts[22].date);
-    // this.props.sendForecast(this.state);
+    console.log(this.state.forecasts[22]);
   }
 
   render() {
     return (
     <section>
         <section className="search-container">
-          <LocationSearch  />
+          <h3>{this.props.title}</h3>
+          <LocationSearch handleChange={this.changeCity.bind(this)} />
           <LocationButton text="Submission" handleClick={this.handleSubmit.bind(this)} />
        </section>
        <section>
+          <DisplayLocation city={this.state.city} />
           <Summary />
        </section>
     </section>
@@ -49,5 +55,7 @@ class App extends React.Component {
 
 
 ReactDOM.render(<App title='Weather🔊Beat' />, document.getElementById('application'))
+
+// module.exports = App;
 
 // const $ = require('jquery');
