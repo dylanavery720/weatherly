@@ -1,5 +1,5 @@
 const React = require('react');
-
+const $ = require('jquery');
 
 class Summary extends React.Component {
   // constructor(props) {
@@ -12,6 +12,9 @@ class Summary extends React.Component {
 // addToCount (num) {
 //   this.setState({count: this.state.count + num});
 // }
+
+
+
 
   render() {
     return (

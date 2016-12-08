@@ -1,21 +1,30 @@
-import React from 'react'
+import React from 'react';
+const $ = require('jquery');
+
 
 class LocationSearch extends React.Component {
   constructor() {
     super();
     this.state = {
       city: '',
+      weather: []
     };
   }
 
+  // getWeather() {
+  //   $.get('http://weatherly-api.herokuapp.com/api/weather', (response) => {
+  //     this.setState({
+  //       weather: response,
+  //     });
+  //   });
+  // }
+
   updateLocation(e) {
-    const { name } = e.target;
-    this.setState({ name });
+    const { name, value } = e.target;
+    this.setState({ [name]: value });
   }
 
-  handleSubmit() {
-    this.props.sendForecast(this.state)
-  }
+
 
   render() {
     return (
@@ -28,14 +37,15 @@ class LocationSearch extends React.Component {
     placeholder="Your Location"
     aria-label="Your Location"
     value={this.state.city}
-    onChange={(e)=>{
+    onChange={(e) => {
     this.updateLocation(e);
+    console.log(this.state.city);
     }}/>
-    <button className="LocationButton" onClick={ () => {
+    {/* <button className="LocationButton" onClick={ () => {
       this.handleSubmit()
     }}>
       <span>Submit</span>
-    </button>
+    </button> */}
  </section>
     );
   }
