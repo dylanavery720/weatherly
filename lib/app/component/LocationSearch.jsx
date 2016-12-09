@@ -6,7 +6,8 @@ class LocationSearch extends React.Component {
   constructor() {
     super();
     this.state = {
-      city: ''
+      city: '',
+      
     };
   }
 
@@ -32,6 +33,7 @@ class LocationSearch extends React.Component {
     onChange={(e) => {
     this.updateLocation(e);
     }}/>
+
  </section>
     );
   }

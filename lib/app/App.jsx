@@ -5,6 +5,7 @@ import Summary  from './component/Summary.jsx';
 import LocationSearch  from './component/LocationSearch.jsx';
 import LocationButton  from './component/LocationButton.jsx';
 import DisplayLocation from './component/LocationDisplay.jsx';
+import DailyForecasts from './component/Forecast.jsx';
 const $ = require('jquery');
 
 export default class App extends React.Component {
@@ -15,16 +16,23 @@ export default class App extends React.Component {
       city: ''
     }
   }
-  storeForecast(forecast) {
-    this.setState({ forecasts: this.state.forecasts})
+
+  // storeForecast(forecast) {
+  //   this.setState({ forecasts: this.state.forecasts})
+  // }
+
+  locationAccepted(filteredWeather){
+    this.setState({ forecasts: filteredWeather})
   }
 
-  getWeather() {
-    $.get('http://weatherly-api.herokuapp.com/api/weather', (response) => {
-      this.setState({
-        forecasts: response,
-      });
-    });
+  getWeather(city) {
+    $.get('http://weatherly-api.herokuapp.com/api/weather').then((weather)=>{
+      let filteredWeather = weather.filter((weatherArray)=>{
+        return weatherArray.location === city;
+      })
+      console.log(filteredWeather)
+      this.locationAccepted(filteredWeather);
+    })
   }
 
   changeCity(city) {
@@ -32,8 +40,7 @@ export default class App extends React.Component {
   }
 
   handleSubmit(city) {
-    this.getWeather();
-    console.log(this.state.forecasts[22]);
+    this.getWeather(this.state.city);
   }
 
   render() {
@@ -42,7 +49,7 @@ export default class App extends React.Component {
         <section className="search-container">
           <h3>{this.props.title}</h3>
           <LocationSearch handleChange={this.changeCity.bind(this)} />
-          <LocationButton text="Submission" handleClick={this.handleSubmit.bind(this)} />
+          <LocationButton text="Submissi" handleClick={this.handleSubmit.bind(this)} />
        </section>
        <section>
           <DisplayLocation city={this.state.city} />
