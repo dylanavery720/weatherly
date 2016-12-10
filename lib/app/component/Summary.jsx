@@ -1,30 +1,16 @@
 const React = require('react');
-const $ = require('jquery');
 
 class Summary extends React.Component {
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-  //     city: 'Default',
-  //   };
-  // }
 
-// addToCount (num) {
-//   this.setState({count: this.state.count + num});
-// }
-
-
-
-
-  render() {
-    return (
-  <section className="Summary">
-    <h4>Hi</h4>
-    <h2>{this.props.text}</h2>
- </section>
-    );
+    render() {
+      return (
+    <section className="summary">
+    <h1 className="date">Date:{this.props.date}</h1>
+    <p>Today the High Temperature will be {this.props.high}</p>
+      <p>Today the Low Temperature will be {this.props.low}</p>
+    </section>
+      );
   }
+
 }
-
-
 module.exports = Summary;
