@@ -1,0 +1,17 @@
+@import "./variables.scss";
+
+.search-container {
+  text-align: center;
+}
+
+.search {
+  display: inline;
+  padding: 0px;
+}
+
+
+.location-input {
+  font-size: 3em;
+  background: #000000;
+  color: $background-color;
+}
