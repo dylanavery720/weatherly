@@ -49,11 +49,11 @@ export default class App extends React.Component {
         <section className="search-container">
           <h3>{this.props.title}</h3>
           <LocationSearch handleChange={this.changeCity.bind(this)} />
-          <LocationButton text="Submissi" handleClick={this.handleSubmit.bind(this)} />
+          <LocationButton text="Submit" handleClick={this.handleSubmit.bind(this)} />
        </section>
        <section>
           <DisplayLocation city={this.state.city} />
-          <Summary />
+          <Summary forecasts={this.state.forecasts}/>
        </section>
     </section>
     );

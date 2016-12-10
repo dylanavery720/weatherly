@@ -1,13 +1,16 @@
 const React = require('react');
-const $ = require('jquery');
 
-const DailyForecasts = ({city, forecasts}) => {
-  return (
-<section className="Summary">
-  <h4>{forecasts}</h4>
-  <h2>Some Text</h2>
-</section>
-  );
+class DailyForecasts extends React.Component {
+
+    render() {
+      return (
+    <section className="Summary">
+      <h1>Date:{this.props.date}</h1>
+      <h4>High:{this.props.high}</h4>
+      <h4>Low:{this.props.low}</h4>
+    </section>
+      );
+  }
+
 }
-
 module.exports = DailyForecasts;
