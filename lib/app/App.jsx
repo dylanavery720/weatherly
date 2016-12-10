@@ -15,7 +15,7 @@ export default class App extends React.Component {
     super()
     this.state = {
       forecasts: [],
-      data: '',
+      data: [],
       city: ''
     }
     this.changeCity = this.changeCity.bind(this)
@@ -43,12 +43,12 @@ export default class App extends React.Component {
   }
 
   grabData(data) {
-    let weatherdata = data.current_observation
+    let weatherdata = data.forecast.simpleforecast.forecastday
       this.setState({data: weatherdata})
   }
 
   getWu(city) {
-    $.getJSON(this.props.url+ 'conditions/q/CA/' + city + '.json').then((weather)=>{
+    $.getJSON(this.props.url+ 'conditions/forecast10day/q/CA/' + city + '.json').then((weather)=>{
       let unknownArray = weather
 
       this.grabData(unknownArray)
