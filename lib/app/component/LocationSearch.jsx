@@ -1,27 +1,24 @@
 import React from 'react';
-const $ = require('jquery');
 
 
 class LocationSearch extends React.Component {
   constructor() {
     super();
-    this.state = {
-      city: '',
-      
-    };
   }
 
 
   updateLocation(e) {
+    console.log(e.target.value)
     const { name, value } = e.target;
-    this.setState({ [name]: value }, this.props.handleChange(value));
+    this.setState({ [name]: value },
+   this.props.handleChange(value));
   }
 
 
 
   render() {
     return (
-  <section className="SearchContainer">
+  <section className="search">
     {/* <h3>Weather🔊Beat</h3> */}
     <input
     type="text"
@@ -29,7 +26,6 @@ class LocationSearch extends React.Component {
     className="location-input"
     placeholder="Your Location"
     aria-label="Your Location"
-    value={this.state.city}
     onChange={(e) => {
     this.updateLocation(e);
     }}/>

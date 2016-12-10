@@ -1,24 +1,16 @@
 const React = require('react');
-const $ = require('jquery');
-import DailyForecasts from './Forecast.jsx';
 
-const Summary = ({city, forecasts}) => {
+class Summary extends React.Component {
 
-
-
-
-    return (
-      <div>
-      <ul>
-      {forecasts.map((forecast) => {
-      return <DailyForecasts date={forecast.date} high={forecast.temp.high} low={forecast.temp.low} />
-    })
+    render() {
+      return (
+    <section className="summary">
+    <h1 className="date">Date:{this.props.date}</h1>
+    <p>Today the High Temperature will be {this.props.high}</p>
+      <p>Today the Low Temperature will be {this.props.low}</p>
+    </section>
+      );
   }
-      </ul>
-      </div>
-    );
 
 }
-
-
 module.exports = Summary;

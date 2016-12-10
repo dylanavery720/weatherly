@@ -7,8 +7,8 @@ class LocationButton extends React.Component {
 
   render() {
     return (
-      <section className="LocationButtonContainer">
-        <button className="LocationButton" onClick={this.props.handleClick}>
+      <section className="location-button-container">
+        <button className="location-button" onClick={this.props.handleClick}>
           <span>{this.props.text}</span>
         </button>
       </section>

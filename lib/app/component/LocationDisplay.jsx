@@ -11,8 +11,8 @@ export default class DisplayLocation extends React.Component {
   render() {
     return (
 
-  <section className="LocationContainer">
-    <h2>{this.props.city}</h2>
+  <section className="location-container">
+    <h2 className="location-display">{this.props.city}</h2>
  </section>
     );
   }
