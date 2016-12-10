@@ -1,16 +1,18 @@
 const React = require('react');
 
-class Summary extends React.Component {
+export default class Summary extends React.Component {
+  
 
     render() {
       return (
     <section className="summary">
     <h1 className="date">Date:{this.props.date}</h1>
-    <p>Today the High Temperature will be {this.props.high}</p>
-      <p>Today the Low Temperature will be {this.props.low}</p>
+    <p>Today there is a {this.props.chance} percent chance of {this.props.type} weather.</p>
+    <p>The High Temperature will be {this.props.high}</p>
+      <p>The Low Temperature will be {this.props.low}</p>
+      <p>Current temperature is {this.props.temp}</p>
     </section>
       );
   }
 
 }
-module.exports = Summary;

@@ -3,7 +3,7 @@ const $ = require('jquery');
 // const ReactDOM = require('react-dom');
 
 
-class LocationButton extends React.Component {
+export default class LocationButton extends React.Component {
 
   render() {
     return (
@@ -15,5 +15,3 @@ class LocationButton extends React.Component {
     )
   }
 }
-
-module.exports = LocationButton;

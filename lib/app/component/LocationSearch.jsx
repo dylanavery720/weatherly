@@ -1,7 +1,7 @@
 import React from 'react';
 
 
-class LocationSearch extends React.Component {
+export default class LocationSearch extends React.Component {
   constructor() {
     super();
   }
@@ -34,5 +34,3 @@ class LocationSearch extends React.Component {
     );
   }
 }
-
-module.exports = LocationSearch;

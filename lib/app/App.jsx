@@ -8,29 +8,29 @@ import DisplayLocation from './component/LocationDisplay.jsx';
 import Summary from './component/Summary.jsx';
 const $ = require('jquery');
 
+
+
 export default class App extends React.Component {
   constructor(){
     super()
     this.state = {
       forecasts: [],
+      data: '',
       city: ''
     }
-  }
-
-  componentDidMount(){
-    let storedWeather = localStorage.getItem('forecasts')
-    let storedCity = localStorage.getItem('city');
-
-    this.setState({
-      forecasts: storedWeather ? JSON.parse(storedWeather) : [],
-      city: storedCity ? JSON.parse(storedCity) : []
-    })
+    this.changeCity = this.changeCity.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
+    this.grabData = this.grabData.bind(this)
   }
 
 
 
-  locationAccepted(filteredWeather){
-    this.setState({ forecasts: filteredWeather}, ()=>{localStorage.setItem('forecasts', JSON.stringify(this.state.forecasts))})
+  locationAccepted(filteredWeather, city){
+      if(filteredWeather.length > 0) {
+      this.setState({ forecasts: filteredWeather}, ()=>{localStorage.setItem('forecasts', JSON.stringify(this.state.forecasts))})
+    } else {
+      this.getWu(city);
+    }
   }
 
   getWeather(city) {
@@ -38,7 +38,20 @@ export default class App extends React.Component {
       let filteredWeather = weather.filter((weatherArray)=>{
         return weatherArray.location === city;
       })
-      this.locationAccepted(filteredWeather);
+      this.locationAccepted(filteredWeather, city);
+    })
+  }
+
+  grabData(data) {
+    let weatherdata = data.current_observation
+      this.setState({data: weatherdata})
+  }
+
+  getWu(city) {
+    $.getJSON(this.props.url+ 'conditions/q/CA/' + city + '.json').then((weather)=>{
+      let unknownArray = weather
+
+      this.grabData(unknownArray)
     })
   }
 
@@ -56,21 +69,31 @@ export default class App extends React.Component {
         <section className="search-container">
           <h3 className="title">{this.props.title}</h3>
           <LocationSearch
-          handleChange={this.changeCity.bind(this)} />
-          <LocationButton text="Submit" handleClick={this.handleSubmit.bind(this)} />
+          handleChange={this.changeCity} />
+          <LocationButton text="Submit" handleClick={this.handleSubmit} />
        </section>
        <DisplayLocation city={this.state.city} />
        <section className="main-container">
-          <DailyForecasts forecasts={this.state.forecasts}/>
+          <DailyForecasts forecasts={this.state.forecasts} data={this.state.data}/>
        </section>
     </section>
     );
   }
+
+  // http://api.wunderground.com/api/Your_Key/conditions/q/CA/San_Francisco.json
+
+
+  componentDidMount(){
+    let storedWeather = localStorage.getItem('forecasts')
+    let storedCity = localStorage.getItem('city');
+
+    this.setState({
+      forecasts: storedWeather ? JSON.parse(storedWeather) : [],
+      city: storedCity ? JSON.parse(storedCity) : ''
+    })
+  }
+
 }
 
 
-ReactDOM.render(<App title='Weather🔊Beat' url='https://api.wunderground.com/api/881631f063e09bd3/' />, document.getElementById('application'))
-
-// module.exports = App;
-
-// const $ = require('jquery');
+ReactDOM.render(<App title='Weather🔊Beat' url='https://api.wunderground.com/api/665cd45e10100c6b/' />, document.getElementById('application'))
