@@ -4,29 +4,29 @@ import Summaries from './Summaries.jsx';
 
  const DailyForecasts = ({city, forecasts, data, macrodata}) => {
 
- console.log(macrodata[0])
+// if (macrodata[0]) {
+//   console.log(macrodata[0]["fcttext"])
+//
+// }
 
     return (
       <div>
       <ul>
-      {data.map((data) => {
-      return (<Summary
-                        month={data.date.monthname}
-                        day={data.date.day}
-                        year={data.date.year}
-                        high={data.high.fahrenheit}
-                        low={data.low.fahrenheit}
-                        chance={data.pop}
-                        // summary={data.type}
+      {data.map((e, i) => {
+      return (<Summary  key={i}
+                        month={e.date.monthname}
+                        day={e.date.day}
+                        year={e.date.year}
+                        high={e.high.fahrenheit}
+                        low={e.low.fahrenheit}
+                        chance={e.pop}
+                        summaryDay={macrodata[i*2].fcttext}
+                        summaryNight={macrodata[i*2+1].fcttext}
+
                         // temp={data.temp_f}
                         />
-                        {macrodata.map((macrodata)=> {
-                          return (<Summaries summary={macrodata.fcttext} /> )
-                        })}
         )
       })}
-
-
 
   }
       </ul>
