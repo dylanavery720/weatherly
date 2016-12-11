@@ -1,4 +1,3 @@
-
 import React from 'react'
 import ReactDOM from 'react-dom'
 import DailyForecasts  from './component/DailyForecasts.jsx';
@@ -6,7 +5,6 @@ import LocationSearch  from './component/LocationSearch.jsx';
 import StateSearch  from './component/StateSearch.jsx';
 import LocationButton  from './component/LocationButton.jsx';
 import ClearButton  from './component/LocationButton.jsx';
-import DisplayLocation from './component/LocationDisplay.jsx';
 const $ = require('jquery');
 
 
@@ -28,18 +26,6 @@ export default class App extends React.Component {
     this.grabData = this.grabData.bind(this)
   }
 
-
-
-  locationAccepted(filteredWeather, city){
-      if(filteredWeather.length > 0) {
-      this.setState({ forecasts: filteredWeather}, ()=>{
-        localStorage.setItem('forecasts', JSON.stringify(this.state.forecasts))
-      })
-    } else {
-      this.getWu(city, state);
-    }
-  }
-
   grabData(data) {
     let weatherdata = data.forecast.simpleforecast.forecastday
     let weathermacro = data.forecast.txt_forecast.forecastday
@@ -52,21 +38,20 @@ export default class App extends React.Component {
   getWu(city, state) {
     $.getJSON(this.props.url + 'conditions/forecast10day/q/' + state + '/' + city + '.json').then((weather)=>{
       let unknownArray = weather
-
+      console.log(unknownArray)
       this.grabData(unknownArray)
     })
   }
 
   changeCity(city) {
     this.setState({ city: city}, ()=>{
-      localStorage.setItem('city', JSON.stringify(city))
+    localStorage.setItem('city', JSON.stringify(city))
     })
   }
 
   changeState(state) {
     this.setState({ state: state }, ()=>{
-
-      localStorage.setItem('state', JSON.stringify(state))
+    localStorage.setItem('state', JSON.stringify(state))
     })
   }
 
@@ -107,11 +92,13 @@ export default class App extends React.Component {
     let storedCity = localStorage.getItem('city');
     let storedData = localStorage.getItem('data');
     let storedMacro = localStorage.getItem('macrodata');
+    let storedState = localStorage.getItem('state');
 
     this.setState({
       forecasts: storedWeather ? JSON.parse(storedWeather) : [],
       data: storedData ? JSON.parse(storedData) : [],
       macrodata: storedMacro ? JSON.parse(storedMacro) : [],
+      state: storedState ? JSON.parse(storedState) : '',
       city: storedCity ? JSON.parse(storedCity) : ''
     })
   }
