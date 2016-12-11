@@ -27,7 +27,9 @@ export default class App extends React.Component {
 
   locationAccepted(filteredWeather, city){
       if(filteredWeather.length > 0) {
-      this.setState({ forecasts: filteredWeather}, ()=>{localStorage.setItem('forecasts', JSON.stringify(this.state.forecasts))})
+      this.setState({ forecasts: filteredWeather}, ()=>{
+        localStorage.setItem('forecasts', JSON.stringify(this.state.forecasts))
+      })
     } else {
       this.getWu(city);
     }
@@ -45,7 +47,10 @@ export default class App extends React.Component {
   grabData(data) {
     let weatherdata = data.forecast.simpleforecast.forecastday
     let weathermacro = data.forecast.txt_forecast.forecastday
-      this.setState({data: weatherdata, macrodata: weathermacro})
+      this.setState({data: weatherdata, macrodata: weathermacro}, ()=>{
+        localStorage.setItem('data', JSON.stringify(this.state.data))
+        localStorage.setItem('macrodata', JSON.stringify(this.state.macrodata))
+      })
   }
 
   getWu(city) {
@@ -85,9 +90,13 @@ export default class App extends React.Component {
   componentDidMount(){
     let storedWeather = localStorage.getItem('forecasts')
     let storedCity = localStorage.getItem('city');
+    let storedData = localStorage.getItem('data');
+    let storedMacro = localStorage.getItem('macrodata');
 
     this.setState({
       forecasts: storedWeather ? JSON.parse(storedWeather) : [],
+      data: storedData ? JSON.parse(storedData) : [],
+      macrodata: storedMacro ? JSON.parse(storedMacro) : [],
       city: storedCity ? JSON.parse(storedCity) : ''
     })
   }
