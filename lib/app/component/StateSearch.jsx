@@ -1,7 +1,7 @@
 import React from 'react';
 
 
-export default class LocationSearch extends React.Component {
+export default class StateSearch extends React.Component {
   constructor() {
     super();
   }
@@ -21,14 +21,14 @@ export default class LocationSearch extends React.Component {
   <section className="search">
     <input
     type="text"
-    name="city"
-    className="location-input"
-    placeholder="City"
-    aria-label="City"
+    name="state"
+    className="state-input"
+    placeholder="State"
+    aria-label="State"
     onChange={(e) => {
-      this.updateLocation(e);
+    this.updateLocation(e);
     }}/>
- </section>
+</section>
     );
   }
 }

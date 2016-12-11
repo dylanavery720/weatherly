@@ -3,6 +3,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import DailyForecasts  from './component/DailyForecasts.jsx';
 import LocationSearch  from './component/LocationSearch.jsx';
+import StateSearch  from './component/StateSearch.jsx';
 import LocationButton  from './component/LocationButton.jsx';
 import ClearButton  from './component/LocationButton.jsx';
 import DisplayLocation from './component/LocationDisplay.jsx';
@@ -17,9 +18,11 @@ export default class App extends React.Component {
       forecasts: [],
       data: [],
       macrodata: [],
+      state: '',
       city: ''
     }
     this.changeCity = this.changeCity.bind(this)
+    this.changeState = this.changeState.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleClear = this.handleClear.bind(this)
     this.grabData = this.grabData.bind(this)
@@ -33,17 +36,8 @@ export default class App extends React.Component {
         localStorage.setItem('forecasts', JSON.stringify(this.state.forecasts))
       })
     } else {
-      this.getWu(city);
+      this.getWu(city, state);
     }
-  }
-
-  getWeather(city) {
-    $.get('http://weatherly-api.herokuapp.com/api/weather').then((weather)=>{
-      let filteredWeather = weather.filter((weatherArray)=>{
-        return weatherArray.location === city;
-      })
-      this.locationAccepted(filteredWeather, city);
-    })
   }
 
   grabData(data) {
@@ -55,8 +49,8 @@ export default class App extends React.Component {
       })
   }
 
-  getWu(city) {
-    $.getJSON(this.props.url + 'conditions/forecast10day/q/CA/' + city + '.json').then((weather)=>{
+  getWu(city, state) {
+    $.getJSON(this.props.url + 'conditions/forecast10day/q/' + state + '/' + city + '.json').then((weather)=>{
       let unknownArray = weather
 
       this.grabData(unknownArray)
@@ -64,11 +58,20 @@ export default class App extends React.Component {
   }
 
   changeCity(city) {
-    this.setState({ city: city }, ()=>{localStorage.setItem('city', JSON.stringify(city))})
+    this.setState({ city: city}, ()=>{
+      localStorage.setItem('city', JSON.stringify(city))
+    })
   }
 
-  handleSubmit(city) {
-    this.getWeather(this.state.city);
+  changeState(state) {
+    this.setState({ state: state }, ()=>{
+
+      localStorage.setItem('state', JSON.stringify(state))
+    })
+  }
+
+  handleSubmit(city, state) {
+    this.getWu(this.state.city, this.state.state);
   }
 
   handleClear(city) {
@@ -86,6 +89,8 @@ export default class App extends React.Component {
           <h3 className="title">{this.props.title}</h3>
           <LocationSearch
           handleChange={this.changeCity} />
+          <StateSearch
+          handleChange={this.changeState} />
           <LocationButton text="Submit" handleClick={this.handleSubmit} />
           <ClearButton text="Clear" handleClick={this.handleClear} />
        </section>
