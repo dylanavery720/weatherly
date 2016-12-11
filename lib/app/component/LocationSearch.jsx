@@ -19,7 +19,6 @@ export default class LocationSearch extends React.Component {
   render() {
     return (
   <section className="search">
-    {/* <h3>Weather🔊Beat</h3> */}
     <input
     type="text"
     name="city"

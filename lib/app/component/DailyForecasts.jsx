@@ -2,8 +2,9 @@ const React = require('react');
 import Summary from './Summary.jsx';
 import Summaries from './Summaries.jsx';
 
- const DailyForecasts = ({city, forecasts, data, macrodata}) => {
+ const DailyForecasts = ({locations, forecasts, data, macrodata}) => {
 
+console.log(locations)
 // if (macrodata[0]) {
 //   console.log(macrodata[0]["fcttext"])
 //
@@ -22,6 +23,7 @@ import Summaries from './Summaries.jsx';
                         chance={e.pop}
                         summaryDay={macrodata[i*2].fcttext}
                         summaryNight={macrodata[i*2+1].fcttext}
+                        locations={locations}
 
                         // temp={data.temp_f}
                         />

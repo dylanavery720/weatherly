@@ -73,9 +73,9 @@ export default class App extends React.Component {
           handleChange={this.changeCity} />
           <LocationButton text="Submit" handleClick={this.handleSubmit} />
        </section>
-       <DisplayLocation city={this.state.city} />
+       {/* <DisplayLocation city={this.state.city} /> */}
        <section className="main-container">
-          <DailyForecasts forecasts={this.state.forecasts} data={this.state.data} macrodata={this.state.macrodata}/>
+          <DailyForecasts forecasts={this.state.forecasts} locations={this.state.city} data={this.state.data} macrodata={this.state.macrodata}/>
        </section>
     </section>
     );
