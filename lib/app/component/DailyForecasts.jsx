@@ -1,9 +1,10 @@
 const React = require('react');
 import Summary from './Summary.jsx';
+import Summaries from './Summaries.jsx';
 
- const DailyForecasts = ({city, forecasts, data}) => {
+ const DailyForecasts = ({city, forecasts, data, macrodata}) => {
 
- console.log(data)
+ console.log(macrodata[0])
 
     return (
       <div>
@@ -13,17 +14,23 @@ import Summary from './Summary.jsx';
                         month={data.date.monthname}
                         day={data.date.day}
                         year={data.date.year}
-                        // high={forecast.temp.high}
-                        // low={forecast.temp.low}
-                        // chance={forecast.weatherType.chance}
-                        // type={forecast.weatherType.type}
-                        temp={data.temp_f}
+                        high={data.high.fahrenheit}
+                        low={data.low.fahrenheit}
+                        chance={data.pop}
+                        // summary={data.type}
+                        // temp={data.temp_f}
                         />
+                        {macrodata.map((macrodata)=> {
+                          return (<Summaries summary={macrodata.fcttext} /> )
+                        })}
         )
       })}
 
+
+
   }
       </ul>
+
       </div>
     );
 

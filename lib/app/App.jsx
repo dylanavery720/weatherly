@@ -5,7 +5,6 @@ import DailyForecasts  from './component/DailyForecasts.jsx';
 import LocationSearch  from './component/LocationSearch.jsx';
 import LocationButton  from './component/LocationButton.jsx';
 import DisplayLocation from './component/LocationDisplay.jsx';
-import Summary from './component/Summary.jsx';
 const $ = require('jquery');
 
 
@@ -16,6 +15,7 @@ export default class App extends React.Component {
     this.state = {
       forecasts: [],
       data: [],
+      macrodata: [],
       city: ''
     }
     this.changeCity = this.changeCity.bind(this)
@@ -44,7 +44,8 @@ export default class App extends React.Component {
 
   grabData(data) {
     let weatherdata = data.forecast.simpleforecast.forecastday
-      this.setState({data: weatherdata})
+    let weathermacro = data.forecast.txt_forecast.forecastday
+      this.setState({data: weatherdata, macrodata: weathermacro})
   }
 
   getWu(city) {
@@ -74,13 +75,11 @@ export default class App extends React.Component {
        </section>
        <DisplayLocation city={this.state.city} />
        <section className="main-container">
-          <DailyForecasts forecasts={this.state.forecasts} data={this.state.data}/>
+          <DailyForecasts forecasts={this.state.forecasts} data={this.state.data} macrodata={this.state.macrodata}/>
        </section>
     </section>
     );
   }
-
-  // http://api.wunderground.com/api/Your_Key/conditions/q/CA/San_Francisco.json
 
 
   componentDidMount(){

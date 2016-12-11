@@ -7,10 +7,10 @@ export default class Summary extends React.Component {
       return (
     <section className="summary">
     <h1 className="date">Date: {this.props.month},{this.props.day},{this.props.year}</h1>
-    <p>Today there is a {this.props.chance} percent chance of {this.props.type} weather.</p>
-    <p>The High Temperature will be {this.props.high}</p>
-      <p>The Low Temperature will be {this.props.low}</p>
-      <p>Current temperature is {this.props.temp}</p>
+    <p>The probability of precipitation is {this.props.chance}.</p>
+    <p>The High Temperature will be {this.props.high}.</p>
+      <p>The Low Temperature will be {this.props.low}.</p>
+      <p>{this.props.summary}</p>
     </section>
       );
   }
