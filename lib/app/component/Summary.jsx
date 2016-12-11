@@ -6,7 +6,7 @@ export default class Summary extends React.Component {
     const month = this.props.month.toUpperCase();
     return (
     <section className="summary">
-    <img src={this.props.icon} className='icon'></img>
+    <img src={this.props.icon} className='icon' alt="weather icon"></img>
     <h1 className="locations">CITY: {this.props.locations}</h1>
     <h1 className="date">DATE: {month},{this.props.day},{this.props.year}</h1>
     <h1 className='lines'>The probability of precipitation is {this.props.chance}.</h1>

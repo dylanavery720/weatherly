@@ -10,8 +10,11 @@ font-family: $main-font;
   }
 }
 
-.body-container {
+body {
   background: $sun-color;
+  &.toggled {
+    background: $rain-color;
+  }
 }
 
 h1 {

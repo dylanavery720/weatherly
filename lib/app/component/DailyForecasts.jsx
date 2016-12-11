@@ -7,7 +7,7 @@ const DailyForecasts = ({ locations, data, macrodata }) => {
       <div>
         <ul>
         {data.map((e, i) => {
-          return (<Summary key={i}
+          return (<li><Summary key={i}
                           month={e.date.monthname}
                           day={e.date.day}
                           year={e.date.year}
@@ -18,7 +18,7 @@ const DailyForecasts = ({ locations, data, macrodata }) => {
                           summaryDay={macrodata[i * 2 + 1].fcttext}
                           summaryNight={macrodata[i * 2 + 1].fcttext}
                           locations={locations.toUpperCase()}
-                          />);
+                          /></li>);
         })}
         </ul>
       </div>
