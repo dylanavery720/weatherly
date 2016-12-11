@@ -37,7 +37,6 @@ export default class App extends React.Component {
   getWu(city, state) {
     $.getJSON(this.props.url + 'conditions/forecast10day/q/' + state + '/' + city + '.json').then((weather)=>{
       let unknownArray = weather
-      console.log(unknownArray)
       this.grabData(unknownArray)
     })
   }
