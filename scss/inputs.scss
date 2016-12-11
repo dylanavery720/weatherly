@@ -11,7 +11,15 @@
 
 
 .location-input {
-  font-size: 3em;
+  font-size: 2em;
   background: #000000;
   color: $background-color;
+  width: 200px;
+}
+
+.state-input {
+  font-size: 2em;
+  background: #000000;
+  color: $background-color;
+  width: 75px;
 }

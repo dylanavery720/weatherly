@@ -1,23 +1,28 @@
 const React = require('react');
 import Summary from './Summary.jsx';
 
-const DailyForecasts = ({city, forecasts}) => {
+const DailyForecasts = ({ locations, data, macrodata }) => {
 
-
-
-
-    return (
+  return (
       <div>
-      <ul>
-      {forecasts.map((forecast) => {
-      return <Summary date={forecast.date} high={forecast.temp.high} low={forecast.temp.low} />
-    })
-  }
-      </ul>
+        <ul>
+        {data.map((e, i) => {
+          return (<li><Summary key={i}
+                          month={e.date.monthname}
+                          day={e.date.day}
+                          year={e.date.year}
+                          high={e.high.fahrenheit}
+                          low={e.low.fahrenheit}
+                          chance={e.pop}
+                          icon={macrodata[i * 2].icon_url}
+                          summaryDay={macrodata[i * 2 + 1].fcttext}
+                          summaryNight={macrodata[i * 2 + 1].fcttext}
+                          locations={locations.toUpperCase()}
+                          /></li>);
+        })}
+        </ul>
       </div>
     );
-
-}
-
+};
 
 module.exports = DailyForecasts;

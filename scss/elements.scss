@@ -11,7 +11,10 @@ font-family: $main-font;
 }
 
 body {
-  background: $rain-color;
+  background: $sun-color;
+  &.toggled {
+    background: $rain-color;
+  }
 }
 
 h1 {
@@ -27,7 +30,7 @@ h3 {
 }
 
 .main-container {
- width: 500px;
+ width: 600px;
  margin: auto;
  padding: 20px;
 
@@ -39,7 +42,7 @@ h3 {
 }
 
 .location-display {
-  color: $background-color;
+  color: #000000;
   font-size: 24px;
 }
 
@@ -49,6 +52,8 @@ h3 {
   border: 2px solid black;
   font-family: $main-font;
   padding: 10px;
+  // background: url('./images/sunny.jpg') no-repeat;
+  background-size: cover;
   background: #000000;
   border: 4px solid $background-color;
 }
@@ -59,6 +64,10 @@ h3 {
 
 .title {
   margin-top: 20px;
-  font-size: 8em;
+  font-size: 6em;
   text-align: center;
+}
+
+.lines {
+  margin: 10px;
 }
