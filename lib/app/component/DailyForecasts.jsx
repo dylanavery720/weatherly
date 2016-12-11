@@ -14,12 +14,12 @@ const DailyForecasts = ({ locations, data, macrodata }) => {
                           high={e.high.fahrenheit}
                           low={e.low.fahrenheit}
                           chance={e.pop}
-                          summaryDay={macrodata[i * 2].fcttext}
+                          icon={macrodata[i * 2].icon_url}
+                          summaryDay={macrodata[i * 2 + 1].fcttext}
                           summaryNight={macrodata[i * 2 + 1].fcttext}
                           locations={locations.toUpperCase()}
                           />);
         })}
-      }
         </ul>
       </div>
     );
