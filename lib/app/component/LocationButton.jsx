@@ -1,7 +1,4 @@
 import React from 'react'
-const $ = require('jquery');
-// const ReactDOM = require('react-dom');
-
 
 export default class LocationButton extends React.Component {
 

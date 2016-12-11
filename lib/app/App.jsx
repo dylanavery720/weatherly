@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom'
 import DailyForecasts  from './component/DailyForecasts.jsx';
 import LocationSearch  from './component/LocationSearch.jsx';
 import LocationButton  from './component/LocationButton.jsx';
+import ClearButton  from './component/LocationButton.jsx';
 import DisplayLocation from './component/LocationDisplay.jsx';
 const $ = require('jquery');
 
@@ -20,6 +21,7 @@ export default class App extends React.Component {
     }
     this.changeCity = this.changeCity.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleClear = this.handleClear.bind(this)
     this.grabData = this.grabData.bind(this)
   }
 
@@ -54,7 +56,7 @@ export default class App extends React.Component {
   }
 
   getWu(city) {
-    $.getJSON(this.props.url+ 'conditions/forecast10day/q/CA/' + city + '.json').then((weather)=>{
+    $.getJSON(this.props.url + 'conditions/forecast10day/q/CA/' + city + '.json').then((weather)=>{
       let unknownArray = weather
 
       this.grabData(unknownArray)
@@ -69,6 +71,14 @@ export default class App extends React.Component {
     this.getWeather(this.state.city);
   }
 
+  handleClear(city) {
+    let parent = document.getElementById('main')
+    let child = document.querySelector('div')
+    parent.removeChild(child)
+    localStorage.clear()
+
+  }
+
   render() {
     return (
     <section className="body-container">
@@ -77,9 +87,9 @@ export default class App extends React.Component {
           <LocationSearch
           handleChange={this.changeCity} />
           <LocationButton text="Submit" handleClick={this.handleSubmit} />
+          <ClearButton text="Clear" handleClick={this.handleClear} />
        </section>
-       {/* <DisplayLocation city={this.state.city} /> */}
-       <section className="main-container">
+       <section id="main" className="main-container">
           <DailyForecasts forecasts={this.state.forecasts} locations={this.state.city} data={this.state.data} macrodata={this.state.macrodata}/>
        </section>
     </section>
