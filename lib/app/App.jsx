@@ -13,7 +13,6 @@ export default class App extends React.Component {
   constructor(){
     super()
     this.state = {
-      forecasts: [],
       data: [],
       macrodata: [],
       state: '',
@@ -80,7 +79,7 @@ export default class App extends React.Component {
           <ClearButton text="Clear" handleClick={this.handleClear} />
        </section>
        <section id="main" className="main-container">
-          <DailyForecasts forecasts={this.state.forecasts} locations={this.state.city} data={this.state.data} macrodata={this.state.macrodata}/>
+          <DailyForecasts locations={this.state.city} data={this.state.data} macrodata={this.state.macrodata}/>
        </section>
     </section>
     );
@@ -88,14 +87,12 @@ export default class App extends React.Component {
 
 
   componentDidMount(){
-    let storedWeather = localStorage.getItem('forecasts')
     let storedCity = localStorage.getItem('city');
     let storedData = localStorage.getItem('data');
     let storedMacro = localStorage.getItem('macrodata');
     let storedState = localStorage.getItem('state');
 
     this.setState({
-      forecasts: storedWeather ? JSON.parse(storedWeather) : [],
       data: storedData ? JSON.parse(storedData) : [],
       macrodata: storedMacro ? JSON.parse(storedMacro) : [],
       state: storedState ? JSON.parse(storedState) : '',

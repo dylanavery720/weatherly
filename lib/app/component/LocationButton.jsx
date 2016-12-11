@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 export default class LocationButton extends React.Component {
 
@@ -9,6 +9,6 @@ export default class LocationButton extends React.Component {
           <span>{this.props.text}</span>
         </button>
       </section>
-    )
+    );
   }
 }

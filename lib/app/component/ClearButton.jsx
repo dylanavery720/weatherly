@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 // const ReactDOM = require('react-dom');
 
 
@@ -11,7 +11,7 @@ export default class ClearButton extends React.Component {
           <span>{this.props.text}</span>
         </button>
       </section>
-    )
+    );
   }
 }
 
