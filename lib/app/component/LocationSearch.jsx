@@ -25,6 +25,7 @@ export default class LocationSearch extends React.Component {
     className="location-input"
     placeholder="City"
     aria-label="City"
+    value={this.props.city}
     onChange={(e) => {
       this.updateLocation(e);
     }}/>

@@ -4,7 +4,7 @@ import DailyForecasts  from './component/DailyForecasts.jsx';
 import LocationSearch  from './component/LocationSearch.jsx';
 import StateSearch  from './component/StateSearch.jsx';
 import LocationButton  from './component/LocationButton.jsx';
-import ClearButton  from './component/LocationButton.jsx';
+import ClearButton  from './component/ClearButton.jsx';
 const $ = require('jquery');
 
 
@@ -57,13 +57,15 @@ export default class App extends React.Component {
     this.getWu(this.state.city, this.state.state);
   }
 
-  handleClear(city) {
+  handleClear(city, state, data, macrodata) {
     let parent = document.getElementById('main')
     let child = document.querySelector('div')
+    let emptylocation = document.querySelectorAll('input')
     parent.removeChild(child)
+    // emptylocation.value = "";
     localStorage.clear()
-
-  }
+    this.setState({city: '', state: '', data: [], macrodata: []})
+}
 
   render() {
     return (
@@ -71,9 +73,9 @@ export default class App extends React.Component {
         <section className="search-container">
           <h3 className="title">{this.props.title}</h3>
           <LocationSearch
-          handleChange={this.changeCity} />
+          handleChange={this.changeCity} city={this.state.city} />
           <StateSearch
-          handleChange={this.changeState} />
+          handleChange={this.changeState} state={this.state.state}/>
           <LocationButton text="Submit" handleClick={this.handleSubmit} />
           <ClearButton text="Clear" handleClick={this.handleClear} />
        </section>
