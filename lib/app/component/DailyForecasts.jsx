@@ -5,7 +5,7 @@ const DailyForecasts = ({ locations, data, macrodata }) => {
 
   return (
       <div>
-        <ul>
+        <ul id="appended">
         {data.map((e, i) => {
           return (<li><Summary key={i}
                           month={e.date.monthname}

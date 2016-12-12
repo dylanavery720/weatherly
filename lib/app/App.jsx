@@ -42,7 +42,7 @@ export default class App extends React.Component {
   }
 
   changeCity(city) {
-    this.setState({ city: city}, ()=>{
+    this.setState({ city: city }, ()=>{
     localStorage.setItem('city', JSON.stringify(city))
     })
   }
@@ -58,11 +58,11 @@ export default class App extends React.Component {
   }
 
   handleClear(city, state, data, macrodata) {
-    let parent = document.getElementById('main')
-    let child = document.querySelector('div')
-    let emptylocation = document.querySelectorAll('input')
-    parent.removeChild(child)
-    // emptylocation.value = "";
+    let parent = document.getElementById('appended')
+    let child = document.querySelectorAll('li')
+    for (let i = 0; i >=child.length; i++) {
+    parent.removeChild(child[i])
+  }
     localStorage.clear()
     this.setState({city: '', state: '', data: [], macrodata: []})
 }
