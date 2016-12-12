@@ -89,7 +89,8 @@ export default class App extends React.Component {
        </section>
        <section id="main" className="main-container">
           <DailyForecasts
-          locations={this.state.city}
+          city={this.state.city}
+          state={this.state.state}
           data={this.state.data} macrodata={this.state.macrodata}/>
        </section>
     </section>
