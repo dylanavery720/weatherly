@@ -1,14 +1,14 @@
 @import "./variables.scss";
 
-.snow {
-background: $snow-color;
-color: #000000;
+.snow, .sleet {
+  background: $snow-color;
+  color: #000000;
 }
 
 .clear {
-background: $sun-color;
-// background: url('./images/sunny.jpg') no-repeat;
-color: #000000;
+  background: $sun-color;
+  // background: url('./images/sunny.jpg') no-repeat;
+  color: #000000;
 }
 
 .partlycloudy, .mostlycloudy, .cloudy {

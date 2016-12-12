@@ -1,7 +1,7 @@
 import React from 'react';
 
 
-export default class StateSearch extends React.Component {
+export default class Search extends React.Component {
   constructor() {
     super();
   }
@@ -9,7 +9,6 @@ export default class StateSearch extends React.Component {
 
   updateLocation(e) {
     const { name, value } = e.target;
-    console.log(name)
     this.setState({ [name]: value },
    this.props.handleChange(value));
   }
@@ -21,15 +20,15 @@ export default class StateSearch extends React.Component {
   <section className="search">
     <input
     type="text"
-    name="state"
-    className="state-input"
-    placeholder="State"
-    aria-label="State"
-    value={this.props.state}
+    name="city"
+    className="location-input"
+    placeholder={this.props.placeholder}
+    aria-label={this.props.placeholder}
+    value={this.props.location}
     onChange={(e) => {
-    this.updateLocation(e);
+      this.updateLocation(e);
     }}/>
-</section>
+ </section>
     );
   }
 }
