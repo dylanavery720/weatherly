@@ -1,10 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import DailyForecasts  from './component/DailyForecasts.jsx';
-import LocationSearch  from './component/LocationSearch.jsx';
-import StateSearch  from './component/StateSearch.jsx';
-import LocationButton  from './component/LocationButton.jsx';
-import ClearButton  from './component/LocationButton.jsx';
+import LocationSearch  from './component/Search.jsx';
+import StateSearch  from './component/Search.jsx';
+import LocationButton  from './component/Button.jsx';
+import ClearButton  from './component/Button.jsx';
 const $ = require('jquery');
 
 
@@ -42,7 +42,7 @@ export default class App extends React.Component {
   }
 
   changeCity(city) {
-    this.setState({ city: city}, ()=>{
+    this.setState({ city: city }, ()=>{
     localStorage.setItem('city', JSON.stringify(city))
     })
   }
@@ -57,13 +57,15 @@ export default class App extends React.Component {
     this.getWu(this.state.city, this.state.state);
   }
 
-  handleClear(city) {
-    let parent = document.getElementById('main')
-    let child = document.querySelector('div')
-    parent.removeChild(child)
-    localStorage.clear()
-
+  handleClear(city, state, data, macrodata) {
+    let parent = document.getElementById('appended')
+    let child = document.querySelectorAll('li')
+    for (let i = 0; i >=child.length; i++) {
+    parent.removeChild(child[i])
   }
+    localStorage.clear()
+    this.setState({city: '', state: '', data: [], macrodata: []})
+}
 
   render() {
     return (
@@ -71,14 +73,24 @@ export default class App extends React.Component {
         <section className="search-container">
           <h3 className="title">{this.props.title}</h3>
           <LocationSearch
-          handleChange={this.changeCity} />
+          handleChange={this.changeCity} location={this.state.city}
+          placeholder="City"
+          />
           <StateSearch
-          handleChange={this.changeState} />
-          <LocationButton text="Submit" handleClick={this.handleSubmit} />
-          <ClearButton text="Clear" handleClick={this.handleClear} />
+          handleChange={this.changeState} location={this.state.state}
+          placeholder="State/Country"
+          />
+          <LocationButton text="Submit" handleClick={this.handleSubmit}
+          class="location-button"
+           />
+          <ClearButton text="Clear" handleClick={this.handleClear}
+          class="clear-button"
+           />
        </section>
        <section id="main" className="main-container">
-          <DailyForecasts locations={this.state.city} data={this.state.data} macrodata={this.state.macrodata}/>
+          <DailyForecasts
+          locations={this.state.city}
+          data={this.state.data} macrodata={this.state.macrodata}/>
        </section>
     </section>
     );

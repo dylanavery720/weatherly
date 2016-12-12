@@ -1,7 +1,7 @@
 import React from 'react';
 
 
-export default class LocationSearch extends React.Component {
+export default class Search extends React.Component {
   constructor() {
     super();
   }
@@ -9,7 +9,6 @@ export default class LocationSearch extends React.Component {
 
   updateLocation(e) {
     const { name, value } = e.target;
-    console.log(name)
     this.setState({ [name]: value },
    this.props.handleChange(value));
   }
@@ -23,8 +22,9 @@ export default class LocationSearch extends React.Component {
     type="text"
     name="city"
     className="location-input"
-    placeholder="City"
-    aria-label="City"
+    placeholder={this.props.placeholder}
+    aria-label={this.props.placeholder}
+    value={this.props.location}
     onChange={(e) => {
       this.updateLocation(e);
     }}/>

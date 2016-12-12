@@ -1,0 +1,27 @@
+@import "./variables.scss";
+
+.snow, .sleet {
+  background: $snow-color;
+  color: #000000;
+}
+
+.clear {
+  background: $sun-color;
+  // background: url('./images/sunny.jpg') no-repeat;
+  color: #000000;
+}
+
+.partlycloudy, .mostlycloudy, .cloudy {
+  background: $cold-color;
+  color: #000000;
+}
+
+.chancerain, .rain {
+  background: $rain-color;
+  color: #000000;
+}
+
+.chancetstorms {
+  background: #000000;
+  color: $background-color;
+}
