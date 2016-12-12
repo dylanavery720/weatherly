@@ -72,3 +72,9 @@ h3 {
 .lines {
   margin: 10px;
 }
+
+.alerts-color {
+  color: #000000;
+  font-style: italic;
+  background-color: $alert-color;
+}

@@ -1,8 +1,7 @@
 const React = require('react');
 import Summary from './Summary.jsx';
 
-const DailyForecasts = ({ data, macrodata, city, state }) => {
-
+const DailyForecasts = ({ data, macrodata, city, state, alertdata }) => {
   return (
       <div>
         <ul id="appended">
@@ -19,6 +18,7 @@ const DailyForecasts = ({ data, macrodata, city, state }) => {
                           icon={macrodata[i * 2].icon_url}
                           summaryDay={macrodata[i * 2 + 1].fcttext}
                           summaryNight={macrodata[i * 2 + 1].fcttext}
+                          alerts={alertdata}
                           city={city.toUpperCase()}
                           state={state.toUpperCase()}
                           /></li>)};

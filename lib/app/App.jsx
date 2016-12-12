@@ -7,13 +7,12 @@ import LocationButton  from './component/Button.jsx';
 import ClearButton  from './component/Button.jsx';
 const $ = require('jquery');
 
-
-
 export default class App extends React.Component {
   constructor(){
     super()
     this.state = {
       data: [],
+      alertdata: [],
       macrodata: [],
       state: '',
       city: ''
@@ -26,9 +25,10 @@ export default class App extends React.Component {
   }
 
   grabData(data) {
+    let alertdata = data.alerts[0].level_meteoalarm_description
     let weatherdata = data.forecast.simpleforecast.forecastday
     let weathermacro = data.forecast.txt_forecast.forecastday
-      this.setState({data: weatherdata, macrodata: weathermacro}, ()=>{
+      this.setState({data: weatherdata, macrodata: weathermacro, alertdata: alertdata}, ()=>{
         localStorage.setItem('data', JSON.stringify(this.state.data))
         localStorage.setItem('macrodata', JSON.stringify(this.state.macrodata))
       })
@@ -91,12 +91,12 @@ export default class App extends React.Component {
           <DailyForecasts
           city={this.state.city}
           state={this.state.state}
+          alertdata={this.state.alertdata}
           data={this.state.data} macrodata={this.state.macrodata}/>
        </section>
     </section>
     );
   }
-
 
   componentDidMount(){
     let storedCity = localStorage.getItem('city');
@@ -111,8 +111,6 @@ export default class App extends React.Component {
       city: storedCity ? JSON.parse(storedCity) : ''
     })
   }
-
 }
 
-
-ReactDOM.render(<App title='Weather🔊Beat' url='https://api.wunderground.com/api/665cd45e10100c6b/' />, document.getElementById('application'))
+ReactDOM.render(<App title='Weather🔊Beat' url='https://api.wunderground.com/api/665cd45e10100c6b/alerts/' />, document.getElementById('application'))

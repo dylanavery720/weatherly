@@ -14,8 +14,8 @@ export default class Summary extends React.Component {
       <h1 className='lines'>The Low Temperature will be {this.props.low}.</h1>
       <h1 className='lines'>Day: {this.props.summaryDay}</h1>
       <h1 className='lines'>Night: {this.props.summaryNight}</h1>
+      <h1 className='alerts-color'>{this.props.alerts}</h1>
     </section>
       );
   }
-
 }
