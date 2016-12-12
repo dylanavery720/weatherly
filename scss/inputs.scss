@@ -11,15 +11,11 @@
 
 
 .location-input {
-  font-size: 2em;
-  background: #000000;
-  color: $background-color;
+  @include input-style;
   width: 200px;
 }
 
 .state-input {
-  font-size: 2em;
-  background: #000000;
-  color: $background-color;
+  @include input-style;
   width: 75px;
 }

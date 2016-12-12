@@ -25,6 +25,7 @@ export default class StateSearch extends React.Component {
     className="state-input"
     placeholder="State"
     aria-label="State"
+    value={this.props.state}
     onChange={(e) => {
     this.updateLocation(e);
     }}/>
