@@ -9,7 +9,8 @@ const DailyForecasts = ({ data, macrodata, city, state }) => {
         {data.map((e, i) => {
           if(i < 7) {
           return (<li className={e.icon}><Summary key={i}
-                          month={e.date.monthname}
+                          month={e.date.monthname_short}
+                          weekDay={e.date.weekday_short.toUpperCase()}
                           day={e.date.day}
                           year={e.date.year}
                           high={e.high.fahrenheit}
