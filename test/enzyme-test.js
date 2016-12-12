@@ -51,9 +51,11 @@ describe('<App/>', () => {
       city.simulate('change', city.node.value = 'oakland')
       state.simulate('change', state.node.value = 'california')
       submit.simulate('click')
-      const wrapper2 = shallow(<DailyForecasts data={wrapper.state().data} />);
+      submit.simulate('click')
+      submit.simulate('click')
+      submit.simulate('click')
       console.log(wrapper.debug());
-      expect(wrapper2.find('ul').childAt(1).type()).to.equal('li');
+      expect(wrapper.find('ul').childAt(0).type()).to.equal('li');
     })
 
     it('should display its title in the header using props', () => {

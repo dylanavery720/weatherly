@@ -54,9 +54,31 @@ h3 {
   padding: 10px;
   // background: url('./images/sunny.jpg') no-repeat;
   background-size: cover;
-  background: #000000;
+  // background: #000000;
   border: 4px solid $background-color;
 }
+
+.snow {
+background: $snow-color;
+color: #000000;
+}
+
+.clear {
+background: $sun-color;
+// background: url('./images/sunny.jpg') no-repeat;
+color: #000000;
+}
+
+.partlycloudy, .mostlycloudy, .cloudy {
+  background: $cold-color;
+  color: #000000;
+}
+
+.chancerain {
+  background: $rain-color;
+  color: #000000;
+}
+
 
 .date {
   margin-bottom: 5px;
