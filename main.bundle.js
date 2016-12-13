@@ -8190,7 +8190,7 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	__webpack_require__(482);
+	__webpack_require__(481);
 
 /***/ },
 /* 299 */
@@ -12076,21 +12076,13 @@
 
 	var _DailyForecasts2 = _interopRequireDefault(_DailyForecasts);
 
-	var _LocationSearch = __webpack_require__(478);
+	var _Search = __webpack_require__(478);
 
-	var _LocationSearch2 = _interopRequireDefault(_LocationSearch);
+	var _Search2 = _interopRequireDefault(_Search);
 
-	var _LocationButton = __webpack_require__(479);
+	var _Button = __webpack_require__(479);
 
-	var _LocationButton2 = _interopRequireDefault(_LocationButton);
-
-	var _LocationDisplay = __webpack_require__(481);
-
-	var _LocationDisplay2 = _interopRequireDefault(_LocationDisplay);
-
-	var _Summary = __webpack_require__(477);
-
-	var _Summary2 = _interopRequireDefault(_Summary);
+	var _Button2 = _interopRequireDefault(_Button);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -12111,42 +12103,41 @@
 	    var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this));
 
 	    _this.state = {
-	      forecasts: [],
+	      data: [],
+	      alertdata: [],
+	      macrodata: [],
+	      state: '',
 	      city: ''
 	    };
+	    _this.changeCity = _this.changeCity.bind(_this);
+	    _this.changeState = _this.changeState.bind(_this);
+	    _this.handleSubmit = _this.handleSubmit.bind(_this);
+	    _this.handleClear = _this.handleClear.bind(_this);
+	    _this.grabData = _this.grabData.bind(_this);
 	    return _this;
 	  }
 
 	  _createClass(App, [{
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      var storedWeather = localStorage.getItem('forecasts');
-	      var storedCity = localStorage.getItem('city');
-
-	      this.setState({
-	        forecasts: storedWeather ? JSON.parse(storedWeather) : [],
-	        city: storedCity ? JSON.parse(storedCity) : []
-	      });
-	    }
-	  }, {
-	    key: 'locationAccepted',
-	    value: function locationAccepted(filteredWeather) {
+	    key: 'grabData',
+	    value: function grabData(data) {
 	      var _this2 = this;
 
-	      this.setState({ forecasts: filteredWeather }, function () {
-	        localStorage.setItem('forecasts', JSON.stringify(_this2.state.forecasts));
+	      var alertdata = data.alerts[0].level_meteoalarm_description;
+	      var weatherdata = data.forecast.simpleforecast.forecastday;
+	      var weathermacro = data.forecast.txt_forecast.forecastday;
+	      this.setState({ data: weatherdata, macrodata: weathermacro, alertdata: alertdata }, function () {
+	        localStorage.setItem('data', JSON.stringify(_this2.state.data));
+	        localStorage.setItem('macrodata', JSON.stringify(_this2.state.macrodata));
 	      });
 	    }
 	  }, {
-	    key: 'getWeather',
-	    value: function getWeather(city) {
+	    key: 'getWu',
+	    value: function getWu(city, state) {
 	      var _this3 = this;
 
-	      $.get('http://weatherly-api.herokuapp.com/api/weather').then(function (weather) {
-	        var filteredWeather = weather.filter(function (weatherArray) {
-	          return weatherArray.location === city;
-	        });
-	        _this3.locationAccepted(filteredWeather);
+	      $.getJSON(this.props.url + 'conditions/forecast10day/q/' + state + '/' + city + '.json').then(function (weather) {
+	        var unknownArray = weather;
+	        _this3.grabData(unknownArray);
 	      });
 	    }
 	  }, {
@@ -12157,9 +12148,27 @@
 	      });
 	    }
 	  }, {
+	    key: 'changeState',
+	    value: function changeState(state) {
+	      this.setState({ state: state }, function () {
+	        localStorage.setItem('state', JSON.stringify(state));
+	      });
+	    }
+	  }, {
 	    key: 'handleSubmit',
-	    value: function handleSubmit(city) {
-	      this.getWeather(this.state.city);
+	    value: function handleSubmit(city, state) {
+	      this.getWu(this.state.city, this.state.state);
+	    }
+	  }, {
+	    key: 'handleClear',
+	    value: function handleClear(city, state, data, macrodata) {
+	      var parent = document.getElementById('appended');
+	      var child = document.querySelectorAll('li');
+	      for (var i = 0; i >= child.length; i++) {
+	        parent.removeChild(child[i]);
+	      }
+	      localStorage.clear();
+	      this.setState({ city: '', state: '', data: [], macrodata: [] });
 	    }
 	  }, {
 	    key: 'render',
@@ -12175,17 +12184,46 @@
 	            { className: 'title' },
 	            this.props.title
 	          ),
-	          _react2.default.createElement(_LocationSearch2.default, {
-	            handleChange: this.changeCity.bind(this) }),
-	          _react2.default.createElement(_LocationButton2.default, { text: 'Submit', handleClick: this.handleSubmit.bind(this) })
+	          _react2.default.createElement(_Search2.default, {
+	            handleChange: this.changeCity, location: this.state.city,
+	            placeholder: 'City'
+	          }),
+	          _react2.default.createElement(_Search2.default, {
+	            handleChange: this.changeState, location: this.state.state,
+	            placeholder: 'State/Country'
+	          }),
+	          _react2.default.createElement(_Button2.default, { text: 'Submit', handleClick: this.handleSubmit,
+	            'class': 'location-button'
+	          }),
+	          _react2.default.createElement(_Button2.default, { text: 'Clear', handleClick: this.handleClear,
+	            'class': 'clear-button'
+	          })
 	        ),
-	        _react2.default.createElement(_LocationDisplay2.default, { city: this.state.city }),
 	        _react2.default.createElement(
 	          'section',
-	          { className: 'main-container' },
-	          _react2.default.createElement(_DailyForecasts2.default, { forecasts: this.state.forecasts })
+	          { id: 'main', className: 'main-container' },
+	          _react2.default.createElement(_DailyForecasts2.default, {
+	            city: this.state.city,
+	            state: this.state.state,
+	            alertdata: this.state.alertdata,
+	            data: this.state.data, macrodata: this.state.macrodata })
 	        )
 	      );
+	    }
+	  }, {
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      var storedCity = localStorage.getItem('city');
+	      var storedData = localStorage.getItem('data');
+	      var storedMacro = localStorage.getItem('macrodata');
+	      var storedState = localStorage.getItem('state');
+
+	      this.setState({
+	        data: storedData ? JSON.parse(storedData) : [],
+	        macrodata: storedMacro ? JSON.parse(storedMacro) : [],
+	        state: storedState ? JSON.parse(storedState) : '',
+	        city: storedCity ? JSON.parse(storedCity) : ''
+	      });
 	    }
 	  }]);
 
@@ -12195,11 +12233,7 @@
 	exports.default = App;
 
 
-	_reactDom2.default.render(_react2.default.createElement(App, { title: 'Weather\uD83D\uDD0ABeat', url: 'https://api.wunderground.com/api/881631f063e09bd3/' }), document.getElementById('application'));
-
-	// module.exports = App;
-
-	// const $ = require('jquery');
+	_reactDom2.default.render(_react2.default.createElement(App, { title: 'Weather\uD83D\uDD0ABeat', url: 'https://api.wunderground.com/api/665cd45e10100c6b/alerts/' }), document.getElementById('application'));
 
 /***/ },
 /* 330 */
@@ -29578,18 +29612,40 @@
 
 
 	var DailyForecasts = function DailyForecasts(_ref) {
-	  var city = _ref.city,
-	      forecasts = _ref.forecasts;
-
+	  var data = _ref.data,
+	      macrodata = _ref.macrodata,
+	      city = _ref.city,
+	      state = _ref.state,
+	      alertdata = _ref.alertdata;
 
 	  return React.createElement(
 	    'div',
 	    null,
 	    React.createElement(
 	      'ul',
-	      null,
-	      forecasts.map(function (forecast) {
-	        return React.createElement(_Summary2.default, { date: forecast.date, high: forecast.temp.high, low: forecast.temp.low });
+	      { id: 'appended' },
+	      data.map(function (e, i) {
+	        if (i < 7) {
+	          return React.createElement(
+	            'li',
+	            { className: e.icon },
+	            React.createElement(_Summary2.default, { key: i,
+	              month: e.date.monthname_short,
+	              weekDay: e.date.weekday_short.toUpperCase(),
+	              day: e.date.day,
+	              year: e.date.year,
+	              high: e.high.fahrenheit,
+	              low: e.low.fahrenheit,
+	              chance: e.pop,
+	              icon: macrodata[i * 2].icon_url,
+	              summaryDay: macrodata[i * 2 + 1].fcttext,
+	              summaryNight: macrodata[i * 2 + 1].fcttext,
+	              alerts: alertdata,
+	              city: city.toUpperCase(),
+	              state: state.toUpperCase()
+	            })
+	          );
+	        };
 	      })
 	    )
 	  );
@@ -29601,7 +29657,11 @@
 /* 477 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -29623,28 +29683,70 @@
 	  }
 
 	  _createClass(Summary, [{
-	    key: "render",
+	    key: 'render',
 	    value: function render() {
+	      var month = this.props.month.toUpperCase();
 	      return React.createElement(
-	        "section",
-	        { className: "summary" },
+	        'section',
+	        { className: 'summary' },
+	        React.createElement('img', { src: this.props.icon, className: 'icon', alt: 'weather icon' }),
 	        React.createElement(
-	          "h1",
-	          { className: "date" },
-	          "Date:",
-	          this.props.date
+	          'h1',
+	          { className: 'locations' },
+	          'CITY: ',
+	          this.props.city,
+	          ', ',
+	          this.props.state
 	        ),
 	        React.createElement(
-	          "p",
-	          null,
-	          "Today the High Temperature will be ",
-	          this.props.high
+	          'h1',
+	          { className: 'date' },
+	          'DATE: ',
+	          this.props.weekDay,
+	          ', ',
+	          month,
+	          ' ',
+	          this.props.day,
+	          ', ',
+	          this.props.year
 	        ),
 	        React.createElement(
-	          "p",
-	          null,
-	          "Today the Low Temperature will be ",
-	          this.props.low
+	          'h1',
+	          { className: 'lines' },
+	          'The probability of precipitation is ',
+	          this.props.chance,
+	          '%.'
+	        ),
+	        React.createElement(
+	          'h1',
+	          { className: 'lines' },
+	          'The High Temperature will be ',
+	          this.props.high,
+	          '.'
+	        ),
+	        React.createElement(
+	          'h1',
+	          { className: 'lines' },
+	          'The Low Temperature will be ',
+	          this.props.low,
+	          '.'
+	        ),
+	        React.createElement(
+	          'h1',
+	          { className: 'lines' },
+	          'Day: ',
+	          this.props.summaryDay
+	        ),
+	        React.createElement(
+	          'h1',
+	          { className: 'lines' },
+	          'Night: ',
+	          this.props.summaryNight
+	        ),
+	        React.createElement(
+	          'h1',
+	          { className: 'alerts-color' },
+	          this.props.alerts
 	        )
 	      );
 	    }
@@ -29653,13 +29755,17 @@
 	  return Summary;
 	}(React.Component);
 
-	module.exports = Summary;
+	exports.default = Summary;
 
 /***/ },
 /* 478 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -29677,19 +29783,18 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var LocationSearch = function (_React$Component) {
-	  _inherits(LocationSearch, _React$Component);
+	var Search = function (_React$Component) {
+	  _inherits(Search, _React$Component);
 
-	  function LocationSearch() {
-	    _classCallCheck(this, LocationSearch);
+	  function Search() {
+	    _classCallCheck(this, Search);
 
-	    return _possibleConstructorReturn(this, (LocationSearch.__proto__ || Object.getPrototypeOf(LocationSearch)).call(this));
+	    return _possibleConstructorReturn(this, (Search.__proto__ || Object.getPrototypeOf(Search)).call(this));
 	  }
 
-	  _createClass(LocationSearch, [{
+	  _createClass(Search, [{
 	    key: "updateLocation",
 	    value: function updateLocation(e) {
-	      console.log(e.target.value);
 	      var _e$target = e.target,
 	          name = _e$target.name,
 	          value = _e$target.value;
@@ -29708,8 +29813,9 @@
 	          type: "text",
 	          name: "city",
 	          className: "location-input",
-	          placeholder: "Your Location",
-	          "aria-label": "Your Location",
+	          placeholder: this.props.placeholder,
+	          "aria-label": this.props.placeholder,
+	          value: this.props.location,
 	          onChange: function onChange(e) {
 	            _this2.updateLocation(e);
 	          } })
@@ -29717,16 +29823,20 @@
 	    }
 	  }]);
 
-	  return LocationSearch;
+	  return Search;
 	}(_react2.default.Component);
 
-	module.exports = LocationSearch;
+	exports.default = Search;
 
 /***/ },
 /* 479 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -29742,30 +29852,27 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var $ = __webpack_require__(480);
-	// const ReactDOM = require('react-dom');
+	var Button = function (_React$Component) {
+	  _inherits(Button, _React$Component);
 
+	  function Button() {
+	    _classCallCheck(this, Button);
 
-	var LocationButton = function (_React$Component) {
-	  _inherits(LocationButton, _React$Component);
-
-	  function LocationButton() {
-	    _classCallCheck(this, LocationButton);
-
-	    return _possibleConstructorReturn(this, (LocationButton.__proto__ || Object.getPrototypeOf(LocationButton)).apply(this, arguments));
+	    return _possibleConstructorReturn(this, (Button.__proto__ || Object.getPrototypeOf(Button)).apply(this, arguments));
 	  }
 
-	  _createClass(LocationButton, [{
-	    key: 'render',
+	  _createClass(Button, [{
+	    key: "render",
 	    value: function render() {
 	      return _react2.default.createElement(
-	        'section',
-	        { className: 'location-button-container' },
+	        "section",
+	        { className: "location-button-container" },
 	        _react2.default.createElement(
-	          'button',
-	          { className: 'location-button', onClick: this.props.handleClick },
+	          "button",
+	          { className: this.props.class,
+	            onClick: this.props.handleClick },
 	          _react2.default.createElement(
-	            'span',
+	            "span",
 	            null,
 	            this.props.text
 	          )
@@ -29774,10 +29881,10 @@
 	    }
 	  }]);
 
-	  return LocationButton;
+	  return Button;
 	}(_react2.default.Component);
 
-	module.exports = LocationButton;
+	exports.default = Button;
 
 /***/ },
 /* 480 */
@@ -40009,62 +40116,13 @@
 /* 481 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var React = __webpack_require__(299);
-
-	var DisplayLocation = function (_React$Component) {
-	  _inherits(DisplayLocation, _React$Component);
-
-	  function DisplayLocation() {
-	    _classCallCheck(this, DisplayLocation);
-
-	    return _possibleConstructorReturn(this, (DisplayLocation.__proto__ || Object.getPrototypeOf(DisplayLocation)).call(this));
-	  }
-
-	  _createClass(DisplayLocation, [{
-	    key: "render",
-	    value: function render() {
-	      return React.createElement(
-	        "section",
-	        { className: "location-container" },
-	        React.createElement(
-	          "h2",
-	          { className: "location-display" },
-	          this.props.city
-	        )
-	      );
-	    }
-	  }]);
-
-	  return DisplayLocation;
-	}(React.Component);
-
-	exports.default = DisplayLocation;
-
-/***/ },
-/* 482 */
-/***/ function(module, exports, __webpack_require__) {
-
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(483);
+	var content = __webpack_require__(482);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(485)(content, {});
+	var update = __webpack_require__(484)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -40081,21 +40139,21 @@
 	}
 
 /***/ },
-/* 483 */
+/* 482 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(484)();
+	exports = module.exports = __webpack_require__(483)();
 	// imports
 
 
 	// module
-	exports.push([module.id, "/* http://meyerweb.com/eric/tools/css/reset/\n   v2.0 | 20110126\n   License: none (public domain)\n*/\nhtml, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {\n  margin: 0;\n  padding: 0;\n  border: 0;\n  font-size: 100%;\n  font: inherit;\n  vertical-align: baseline; }\n\n/* HTML5 display-role reset for older browsers */\narticle, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {\n  display: block; }\n\nbody {\n  line-height: 1; }\n\nol, ul {\n  list-style: none; }\n\nblockquote, q {\n  quotes: none; }\n\nblockquote:before, blockquote:after {\n  content: '';\n  content: none; }\n\nq:before, q:after {\n  content: '';\n  content: none; }\n\ntable {\n  border-collapse: collapse;\n  border-spacing: 0; }\n\n.search-container {\n  text-align: center; }\n\n.search {\n  display: inline;\n  padding: 0px; }\n\n.location-input {\n  font-size: 3em;\n  background: #000000;\n  color: #FFFFFF; }\n\n.location-button {\n  cursor: pointer;\n  font-size: 2em;\n  color: #FFFFFF;\n  border: 2px solid #FFFFFF;\n  border-radius: 20px;\n  background-color: #000000;\n  padding: 8px; }\n\n.location-button-container {\n  display: inline; }\n\n* {\n  margin: 10px;\n  font-family: \"Cairo\", sans-serif; }\n  *:focus {\n    outline: none; }\n\nbody {\n  background: #017DC2; }\n\nh1 {\n  font-size: 35px; }\n\nh2 {\n  font-size: 25px; }\n\nh3 {\n  font-size: 20px; }\n\n.main-container {\n  width: 500px;\n  margin: auto;\n  padding: 20px;\n  color: #FFFFFF; }\n\n.location-container {\n  text-align: center; }\n\n.location-display {\n  color: #FFFFFF;\n  font-size: 24px; }\n\n.summary {\n  margin: 20px auto;\n  text-align: center;\n  border: 2px solid black;\n  font-family: \"Cairo\", sans-serif;\n  padding: 10px;\n  background: #000000;\n  border: 4px solid #FFFFFF; }\n\n.date {\n  margin-bottom: 5px; }\n\n.title {\n  margin-top: 20px;\n  font-size: 8em;\n  text-align: center; }\n", ""]);
+	exports.push([module.id, "/* http://meyerweb.com/eric/tools/css/reset/\n   v2.0 | 20110126\n   License: none (public domain)\n*/\nhtml, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {\n  margin: 0;\n  padding: 0;\n  border: 0;\n  font-size: 100%;\n  font: inherit;\n  vertical-align: baseline; }\n\n/* HTML5 display-role reset for older browsers */\narticle, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {\n  display: block; }\n\nbody {\n  line-height: 1; }\n\nol, ul {\n  list-style: none; }\n\nblockquote, q {\n  quotes: none; }\n\nblockquote:before, blockquote:after {\n  content: '';\n  content: none; }\n\nq:before, q:after {\n  content: '';\n  content: none; }\n\ntable {\n  border-collapse: collapse;\n  border-spacing: 0; }\n\n.snow, .sleet, .chancesnow {\n  background: #eee9e9;\n  color: #000000; }\n\n.clear {\n  background: #fDB126;\n  color: #000000; }\n\n.partlycloudy, .mostlycloudy, .cloudy {\n  background: #9ee4d9;\n  color: #000000; }\n\n.chancerain, .rain {\n  background: #017DC2;\n  color: #000000; }\n\n.chancetstorms, .tstorms {\n  background: #000000;\n  color: #FFFFFF; }\n\n.search-container {\n  text-align: center; }\n\n.search {\n  display: inline;\n  padding: 0px; }\n\n.location-input {\n  font-size: 2em;\n  background: #000000;\n  color: #FFFFFF;\n  width: 200px; }\n\n.state-input {\n  font-size: 2em;\n  background: #000000;\n  color: #FFFFFF;\n  width: 75px; }\n\n.location-button {\n  cursor: pointer;\n  font-size: 2em;\n  color: #FFFFFF;\n  border: 2px solid #FFFFFF;\n  border-radius: 20px;\n  background-color: #000000;\n  padding: 8px; }\n\n.clear-button {\n  cursor: pointer;\n  font-size: 2em;\n  color: #FFFFFF;\n  border: 2px solid #FFFFFF;\n  border-radius: 20px;\n  background-color: #000000;\n  padding: 8px; }\n\n.location-button-container {\n  display: inline; }\n\n* {\n  margin: 10px;\n  font-family: \"Cairo\", sans-serif; }\n  *:focus {\n    outline: none; }\n\nbody {\n  background: #FFFFFF; }\n  body.toggled {\n    background: #017DC2; }\n\nh1 {\n  font-size: 35px; }\n\nh2 {\n  font-size: 25px; }\n\nh3 {\n  font-size: 20px; }\n\n.main-container {\n  width: 600px;\n  margin: auto;\n  padding: 20px;\n  color: #FFFFFF; }\n\n.location-container {\n  text-align: center; }\n\n.location-display {\n  color: #000000;\n  font-size: 24px; }\n\n.summary {\n  margin: 20px auto;\n  text-align: center;\n  border: 2px solid black;\n  font-family: \"Cairo\", sans-serif;\n  padding: 10px;\n  background-size: cover;\n  border: 4px solid #FFFFFF; }\n\n.date {\n  margin-bottom: 5px; }\n\n.title {\n  margin-top: 20px;\n  font-size: 6em;\n  text-align: center; }\n\n.lines {\n  margin: 10px; }\n\n.alerts-color {\n  color: #000000;\n  font-style: italic;\n  background-color: #ff0000; }\n", ""]);
 
 	// exports
 
 
 /***/ },
-/* 484 */
+/* 483 */
 /***/ function(module, exports) {
 
 	/*
@@ -40151,7 +40209,7 @@
 
 
 /***/ },
-/* 485 */
+/* 484 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*

@@ -18,7 +18,7 @@ const DailyForecasts = ({ data, macrodata, city, state, alertdata }) => {
                           icon={macrodata[i * 2].icon_url}
                           summaryDay={macrodata[i * 2 + 1].fcttext}
                           summaryNight={macrodata[i * 2 + 1].fcttext}
-                          alerts={alertdata}
+                          alerts={alertdata.level_meteoalarm_description} 
                           city={city.toUpperCase()}
                           state={state.toUpperCase()}
                           /></li>)};
