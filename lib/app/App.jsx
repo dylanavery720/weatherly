@@ -8,45 +8,46 @@ import ClearButton from './component/Button.jsx';
 const $ = require('jquery');
 
 export default class App extends React.Component {
-  constructor(){
-    super()
+  constructor() {
+    super();
     this.state = {
       data: [],
       alertdata: [],
       macrodata: [],
       state: '',
-      city: ''
-    }
-    this.changeCity = this.changeCity.bind(this)
-    this.changeState = this.changeState.bind(this)
-    this.handleSubmit = this.handleSubmit.bind(this)
-    this.handleClear = this.handleClear.bind(this)
+      city: '',
+    };
+    this.changeCity = this.changeCity.bind(this);
+    this.changeState = this.changeState.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleClear = this.handleClear.bind(this);
   }
 
   grabData(data) {
-    this.checkAlerts(data)
+    this.checkAlerts(data);
   }
 
   getWu(city, state) {
-    $.getJSON(this.props.url + 'conditions/forecast10day/q/' + state + '/' + city + '.json').then((weather)=>{
-      let unknownArray = weather
-      this.checkInput(unknownArray)
-      this.grabData(unknownArray)
-    })
+    $.getJSON(this.props.url + 'conditions/forecast10day/q/'
+    + state + '/' + city + '.json').then((weather) => {
+      const unknownArray = weather;
+      this.checkInput(unknownArray);
+      this.grabData(unknownArray);
+    });
   }
 
-  checkAlerts(data){
-    if(data.alerts.length > 0){
-    let alertdata = data.alerts[0]
-    this.setState({alertdata: alertdata})
+  checkAlerts(data) {
+    const weatherdata = data.forecast.simpleforecast.forecastday;
+    const weathermacro = data.forecast.txt_forecast.forecastday;
+    const alertdata = [];
+    this.setState({ data: weatherdata, macrodata: weathermacro, alertdata: alertdata }, () => {
+      localStorage.setItem('data', JSON.stringify(this.state.data));
+      localStorage.setItem('macrodata', JSON.stringify(this.state.macrodata));
+    }); if (data.alerts.length > 0) {
+      const alertdata = data.alerts[0];
+      this.setState({ alertdata: alertdata });
     }
-      let weatherdata = data.forecast.simpleforecast.forecastday
-      let weathermacro = data.forecast.txt_forecast.forecastday
-        this.setState({data: weatherdata, macrodata: weathermacro}, ()=>{
-          localStorage.setItem('data', JSON.stringify(this.state.data))
-          localStorage.setItem('macrodata', JSON.stringify(this.state.macrodata))
-      })
-    }
+  }
 
 
   checkInput(u){
@@ -81,7 +82,7 @@ export default class App extends React.Component {
     parent.removeChild(child[i])
   }
     localStorage.clear()
-    this.setState({city: '', state: '', data: [], macrodata: []})
+    this.setState({city: '', state: '', data: [], macrodata: [], alertdata: []})
 }
 
   render() {
