@@ -1,6 +1,6 @@
 @import "./variables.scss";
 
-.snow, .sleet {
+.snow, .sleet, .chancesnow {
   background: $snow-color;
   color: #000000;
 }
@@ -21,7 +21,7 @@
   color: #000000;
 }
 
-.chancetstorms {
+.chancetstorms, .tstorms {
   background: #000000;
   color: $background-color;
 }
