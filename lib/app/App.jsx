@@ -90,11 +90,15 @@ export default class App extends React.Component {
         <section className="search-container">
           <h3 className="title">{this.props.title}</h3>
           <LocationSearch
-          handleChange={this.changeCity} location={this.state.city}
+          handleChange={this.changeCity}
+          id="citytest"
+          location={this.state.city}
           placeholder="City"
           />
           <StateSearch
-          handleChange={this.changeState} location={this.state.state}
+          handleChange={this.changeState}
+          id="statetest"
+          location={this.state.state}
           placeholder="State/Country"
           />
           <LocationButton text="Submit" handleClick={this.handleSubmit}
