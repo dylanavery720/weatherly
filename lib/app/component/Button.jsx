@@ -2,8 +2,6 @@ import React from 'react';
 
 export default class Button extends React.Component {
 
-
-
   render() {
     return (
       <section className="location-button-container">

@@ -12138,7 +12138,7 @@
 	      var _this3 = this;
 
 	      if (data.alerts.length > 0) {
-	        var alertdata = data.alerts[0].level_meteoalarm_description;
+	        var alertdata = data.alerts[0];
 	        this.setState({ alertdata: alertdata });
 	      }
 	      var weatherdata = data.forecast.simpleforecast.forecastday;
@@ -12202,11 +12202,15 @@
 	            this.props.title
 	          ),
 	          _react2.default.createElement(_Search2.default, {
-	            handleChange: this.changeCity, location: this.state.city,
+	            handleChange: this.changeCity,
+	            id: 'citytest',
+	            location: this.state.city,
 	            placeholder: 'City'
 	          }),
 	          _react2.default.createElement(_Search2.default, {
-	            handleChange: this.changeState, location: this.state.state,
+	            handleChange: this.changeState,
+	            id: 'statetest',
+	            location: this.state.state,
 	            placeholder: 'State/Country'
 	          }),
 	          _react2.default.createElement(_Button2.default, { text: 'Submit', handleClick: this.handleSubmit,
@@ -29830,6 +29834,7 @@
 	          type: "text",
 	          name: "city",
 	          className: "location-input",
+	          id: this.props.id,
 	          placeholder: this.props.placeholder,
 	          "aria-label": this.props.placeholder,
 	          value: this.props.location,
