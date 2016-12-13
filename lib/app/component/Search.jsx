@@ -22,6 +22,7 @@ export default class Search extends React.Component {
     type="text"
     name="city"
     className="location-input"
+    id={this.props.id}
     placeholder={this.props.placeholder}
     aria-label={this.props.placeholder}
     value={this.props.location}

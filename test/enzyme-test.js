@@ -4,6 +4,7 @@ import Summary from '../lib/app/component/Summary';
 import DailyForecasts from '../lib/app/component/DailyForecasts';
 import Button from '../lib/app/component/Button';
 import Search from '../lib/app/component/Search';
+
 import App from '../lib/app/App';
 import { shallow,mount, render} from 'enzyme';
 import { expect } from 'chai';
@@ -17,16 +18,17 @@ describe('<App/>', () => {
 
   it('should have two searches and two buttons', () => {
     const wrapper = shallow(<App />)
-    const LocationSearch= wrapper.find('Search')
-    const LocationButton = wrapper.find('Button')
+    console.log(wrapper.debug())
+    const Search= wrapper.find('Search')
+    const Button = wrapper.find('Button')
     expect(Search).to.have.length(2)
     expect(Button).to.have.length(2)
   })
 
   it('should update state when I add a forecast to the page', () => {
     const wrapper = mount(<App />);
-    const city = wrapper.find('.location-input');
-    const state = wrapper.find('.state-input');
+    const city = wrapper.find('#citytest');
+    const state = wrapper.find('#statetest');
     const submit = wrapper.find('.location-button');
     city.simulate('change', city.node.value = 'oakland')
     state.simulate('change', state.node.value = 'california')
@@ -37,23 +39,20 @@ describe('<App/>', () => {
 
 
     it.skip('should have a link to an API as a prop', () => {
-      const wrapper = shallow(<App url="https://api.wunderground.com/api/665cd45e10100c6b/"/>);
-      expect(wrapper.find(url).at(0).props().url).to.equal("https://api.wunderground.com/api/665cd45e10100c6b/");
+      const url = "www.google.com"
+      const wrapper = shallow(<App url={url}/>);
+      expect(wrapper.find(url).at(1).props().url).to.equal("www.google.com");
 
     })
 
     it.skip('should have unordered list with nested list elements', () => {
       const wrapper = mount(<App />);
-      const city = wrapper.find('.location-input');
-      const state = wrapper.find('.state-input');
+      const city = wrapper.find('#citytest');
+      const state = wrapper.find('#statetest');
       const submit = wrapper.find('.location-button');
       city.simulate('change', city.node.value = 'oakland')
       state.simulate('change', state.node.value = 'california')
       submit.simulate('click')
-      submit.simulate('click')
-      submit.simulate('click')
-      submit.simulate('click')
-      console.log(wrapper.debug());
       expect(wrapper.find('ul').childAt(0).type()).to.equal('li');
     })
 
@@ -77,6 +76,10 @@ expect(wrapper.equals(<section className="summary">
   </section>)).to.equal(true);
 
     })
+
+    it.skip('should throw a red alert when severe weather is forecasted'), ()=> {
+      //set alert array to 1
+    }
 
 
 

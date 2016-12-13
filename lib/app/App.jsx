@@ -21,25 +21,42 @@ export default class App extends React.Component {
     this.changeState = this.changeState.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleClear = this.handleClear.bind(this)
-    this.grabData = this.grabData.bind(this)
   }
 
   grabData(data) {
-    let alertdata = data.alerts[0].level_meteoalarm_description
-    let weatherdata = data.forecast.simpleforecast.forecastday
-    let weathermacro = data.forecast.txt_forecast.forecastday
-      this.setState({data: weatherdata, macrodata: weathermacro, alertdata: alertdata}, ()=>{
-        localStorage.setItem('data', JSON.stringify(this.state.data))
-        localStorage.setItem('macrodata', JSON.stringify(this.state.macrodata))
-      })
+    this.checkAlerts(data)
   }
 
   getWu(city, state) {
     $.getJSON(this.props.url + 'conditions/forecast10day/q/' + state + '/' + city + '.json').then((weather)=>{
       let unknownArray = weather
+      this.checkInput(unknownArray)
       this.grabData(unknownArray)
     })
   }
+
+  checkAlerts(data){
+    if(data.alerts.length > 0){
+    let alertdata = data.alerts[0]
+    this.setState({alertdata: alertdata})
+    }
+      let weatherdata = data.forecast.simpleforecast.forecastday
+      let weathermacro = data.forecast.txt_forecast.forecastday
+        this.setState({data: weatherdata, macrodata: weathermacro}, ()=>{
+          localStorage.setItem('data', JSON.stringify(this.state.data))
+          localStorage.setItem('macrodata', JSON.stringify(this.state.macrodata))
+      })
+    }
+
+
+  checkInput(u){
+    if(u.response.error){
+      alert('CITY NOT FOUND PLEASE CHECK SPELLING')
+    } else {
+      return true;
+    }
+  }
+
 
   changeCity(city) {
     this.setState({ city: city }, ()=>{
@@ -73,11 +90,15 @@ export default class App extends React.Component {
         <section className="search-container">
           <h3 className="title">{this.props.title}</h3>
           <LocationSearch
-          handleChange={this.changeCity} location={this.state.city}
+          handleChange={this.changeCity}
+          id="citytest"
+          location={this.state.city}
           placeholder="City"
           />
           <StateSearch
-          handleChange={this.changeState} location={this.state.state}
+          handleChange={this.changeState}
+          id="statetest"
+          location={this.state.state}
           placeholder="State/Country"
           />
           <LocationButton text="Submit" handleClick={this.handleSubmit}
