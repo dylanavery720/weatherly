@@ -1,10 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import DailyForecasts  from './component/DailyForecasts.jsx';
-import LocationSearch  from './component/Search.jsx';
-import StateSearch  from './component/Search.jsx';
-import LocationButton  from './component/Button.jsx';
-import ClearButton  from './component/Button.jsx';
+import DailyForecasts from './component/DailyForecasts.jsx';
+import LocationSearch from './component/Search.jsx';
+import StateSearch from './component/Search.jsx';
+import LocationButton from './component/Button.jsx';
+import ClearButton from './component/Button.jsx';
 const $ = require('jquery');
 
 export default class App extends React.Component {
