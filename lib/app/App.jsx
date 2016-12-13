@@ -37,7 +37,7 @@ export default class App extends React.Component {
 
   checkAlerts(data){
     if(data.alerts.length > 0){
-    let alertdata = data.alerts[0].level_meteoalarm_description
+    let alertdata = data.alerts[0]
     this.setState({alertdata: alertdata})
     }
       let weatherdata = data.forecast.simpleforecast.forecastday

@@ -12113,32 +12113,49 @@
 	    _this.changeState = _this.changeState.bind(_this);
 	    _this.handleSubmit = _this.handleSubmit.bind(_this);
 	    _this.handleClear = _this.handleClear.bind(_this);
-	    _this.grabData = _this.grabData.bind(_this);
 	    return _this;
 	  }
 
 	  _createClass(App, [{
 	    key: 'grabData',
 	    value: function grabData(data) {
-	      var _this2 = this;
-
-	      var alertdata = data.alerts[0].level_meteoalarm_description;
-	      var weatherdata = data.forecast.simpleforecast.forecastday;
-	      var weathermacro = data.forecast.txt_forecast.forecastday;
-	      this.setState({ data: weatherdata, macrodata: weathermacro, alertdata: alertdata }, function () {
-	        localStorage.setItem('data', JSON.stringify(_this2.state.data));
-	        localStorage.setItem('macrodata', JSON.stringify(_this2.state.macrodata));
-	      });
+	      this.checkAlerts(data);
 	    }
 	  }, {
 	    key: 'getWu',
 	    value: function getWu(city, state) {
-	      var _this3 = this;
+	      var _this2 = this;
 
 	      $.getJSON(this.props.url + 'conditions/forecast10day/q/' + state + '/' + city + '.json').then(function (weather) {
 	        var unknownArray = weather;
-	        _this3.grabData(unknownArray);
+	        _this2.checkInput(unknownArray);
+	        _this2.grabData(unknownArray);
 	      });
+	    }
+	  }, {
+	    key: 'checkAlerts',
+	    value: function checkAlerts(data) {
+	      var _this3 = this;
+
+	      if (data.alerts.length > 0) {
+	        var alertdata = data.alerts[0].level_meteoalarm_description;
+	        this.setState({ alertdata: alertdata });
+	      }
+	      var weatherdata = data.forecast.simpleforecast.forecastday;
+	      var weathermacro = data.forecast.txt_forecast.forecastday;
+	      this.setState({ data: weatherdata, macrodata: weathermacro }, function () {
+	        localStorage.setItem('data', JSON.stringify(_this3.state.data));
+	        localStorage.setItem('macrodata', JSON.stringify(_this3.state.macrodata));
+	      });
+	    }
+	  }, {
+	    key: 'checkInput',
+	    value: function checkInput(u) {
+	      if (u.response.error) {
+	        alert('CITY NOT FOUND PLEASE CHECK SPELLING');
+	      } else {
+	        return true;
+	      }
 	    }
 	  }, {
 	    key: 'changeCity',
@@ -29640,7 +29657,7 @@
 	              icon: macrodata[i * 2].icon_url,
 	              summaryDay: macrodata[i * 2 + 1].fcttext,
 	              summaryNight: macrodata[i * 2 + 1].fcttext,
-	              alerts: alertdata,
+	              alerts: alertdata.level_meteoalarm_description,
 	              city: city.toUpperCase(),
 	              state: state.toUpperCase()
 	            })

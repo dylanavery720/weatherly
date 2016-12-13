@@ -78,6 +78,8 @@ expect(wrapper.equals(<section className="summary">
 
     })
 
+    it('should throw a red alert when severe weather is forecasted')
+
 
 
 })
