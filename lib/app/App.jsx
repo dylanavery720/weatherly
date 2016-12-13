@@ -39,19 +39,19 @@ export default class App extends React.Component {
   checkAlerts(data) {
     const weatherdata = data.forecast.simpleforecast.forecastday;
     const weathermacro = data.forecast.txt_forecast.forecastday;
-    const alertdata = [];
+    let alertdata = [];
     this.setState({ data: weatherdata, macrodata: weathermacro, alertdata: alertdata }, () => {
       localStorage.setItem('data', JSON.stringify(this.state.data));
       localStorage.setItem('macrodata', JSON.stringify(this.state.macrodata));
     }); if (data.alerts.length > 0) {
-      const alertdata = data.alerts[0];
+      alertdata = data.alerts[0];
       this.setState({ alertdata: alertdata });
     }
   }
 
 
-  checkInput(u){
-    if(u.response.error){
+  checkInput(u) {
+    if (u.response.error) {
       alert('CITY NOT FOUND PLEASE CHECK SPELLING')
     } else {
       return true;
@@ -60,15 +60,15 @@ export default class App extends React.Component {
 
 
   changeCity(city) {
-    this.setState({ city: city }, ()=>{
-    localStorage.setItem('city', JSON.stringify(city))
+    this.setState({ city: city }, () => {
+      localStorage.setItem('city', JSON.stringify(city))
     })
   }
 
   changeState(state) {
-    this.setState({ state: state }, ()=>{
-    localStorage.setItem('state', JSON.stringify(state))
-    })
+    this.setState({ state: state }, () => {
+      localStorage.setItem('state', JSON.stringify(state))
+    });
   }
 
   handleSubmit(city, state) {
@@ -76,14 +76,14 @@ export default class App extends React.Component {
   }
 
   handleClear(city, state, data, macrodata) {
-    let parent = document.getElementById('appended')
-    let child = document.querySelectorAll('li')
-    for (let i = 0; i >=child.length; i++) {
-    parent.removeChild(child[i])
+    const parent = document.getElementById('appended');
+    const child = document.querySelectorAll('li');
+    for (let i = 0; i >= child.length; i++) {
+      parent.removeChild(child[i]);
+    }
+    localStorage.clear();
+    this.setState({ city: '', state: '', data: [], macrodata: [], alertdata: [] });
   }
-    localStorage.clear()
-    this.setState({city: '', state: '', data: [], macrodata: [], alertdata: []})
-}
 
   render() {
     return (
@@ -120,19 +120,19 @@ export default class App extends React.Component {
     );
   }
 
-  componentDidMount(){
-    let storedCity = localStorage.getItem('city');
-    let storedData = localStorage.getItem('data');
-    let storedMacro = localStorage.getItem('macrodata');
-    let storedState = localStorage.getItem('state');
+  componentDidMount() {
+    const storedCity = localStorage.getItem('city');
+    const storedData = localStorage.getItem('data');
+    const storedMacro = localStorage.getItem('macrodata');
+    const storedState = localStorage.getItem('state');
 
     this.setState({
       data: storedData ? JSON.parse(storedData) : [],
       macrodata: storedMacro ? JSON.parse(storedMacro) : [],
       state: storedState ? JSON.parse(storedState) : '',
-      city: storedCity ? JSON.parse(storedCity) : ''
-    })
+      city: storedCity ? JSON.parse(storedCity) : '',
+    });
   }
 }
 
-ReactDOM.render(<App title='Weather🔊Beat' url='https://api.wunderground.com/api/665cd45e10100c6b/alerts/' />, document.getElementById('application'))
+ReactDOM.render(<App title='Weather🔊Beat' url='https://api.wunderground.com/api/665cd45e10100c6b/alerts/' />, document.getElementById('application'));
