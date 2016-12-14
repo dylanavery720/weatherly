@@ -1,10 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import DailyForecasts from './component/DailyForecasts.jsx';
-import LocationSearch from './component/Search.jsx';
-import StateSearch from './component/Search.jsx';
-import LocationButton from './component/Button.jsx';
-import ClearButton from './component/Button.jsx';
+import Search from './component/Search.jsx';
+import Button from './component/Button.jsx';
 const $ = require('jquery');
 
 export default class App extends React.Component {
@@ -90,22 +88,22 @@ export default class App extends React.Component {
     <section className="body-container">
         <section className="search-container">
           <h3 className="title">{this.props.title}</h3>
-          <LocationSearch
+          <Search
           handleChange={this.changeCity}
           id="citytest"
           location={this.state.city}
           placeholder="City"
           />
-          <StateSearch
+          <Search
           handleChange={this.changeState}
           id="statetest"
           location={this.state.state}
           placeholder="State/Country"
           />
-          <LocationButton text="Submit" handleClick={this.handleSubmit}
+          <Button text="Submit" handleClick={this.handleSubmit}
           class="location-button"
            />
-          <ClearButton text="Clear" handleClick={this.handleClear}
+          <Button text="Clear" handleClick={this.handleClear}
           class="clear-button"
            />
        </section>

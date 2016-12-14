@@ -12137,16 +12137,16 @@
 	    value: function checkAlerts(data) {
 	      var _this3 = this;
 
-	      if (data.alerts.length > 0) {
-	        var alertdata = data.alerts[0];
-	        this.setState({ alertdata: alertdata });
-	      }
 	      var weatherdata = data.forecast.simpleforecast.forecastday;
 	      var weathermacro = data.forecast.txt_forecast.forecastday;
-	      this.setState({ data: weatherdata, macrodata: weathermacro }, function () {
+	      var alertdata = [];
+	      this.setState({ data: weatherdata, macrodata: weathermacro, alertdata: alertdata }, function () {
 	        localStorage.setItem('data', JSON.stringify(_this3.state.data));
 	        localStorage.setItem('macrodata', JSON.stringify(_this3.state.macrodata));
-	      });
+	      });if (data.alerts.length > 0) {
+	        alertdata = data.alerts[0];
+	        this.setState({ alertdata: alertdata });
+	      }
 	    }
 	  }, {
 	    key: 'checkInput',
@@ -12185,7 +12185,7 @@
 	        parent.removeChild(child[i]);
 	      }
 	      localStorage.clear();
-	      this.setState({ city: '', state: '', data: [], macrodata: [] });
+	      this.setState({ city: '', state: '', data: [], macrodata: [], alertdata: [] });
 	    }
 	  }, {
 	    key: 'render',
@@ -29666,7 +29666,7 @@
 	              state: state.toUpperCase()
 	            })
 	          );
-	        };
+	        }
 	      })
 	    )
 	  );
@@ -29724,7 +29724,7 @@
 	          { className: 'date' },
 	          'DATE: ',
 	          this.props.weekDay,
-	          ', ',
+	          ',',
 	          month,
 	          ' ',
 	          this.props.day,
